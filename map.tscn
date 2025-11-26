@@ -1,11 +1,8 @@
-[gd_scene load_steps=9 format=4 uid="uid://bnimh2dspthqb"]
+[gd_scene load_steps=6 format=4 uid="uid://bnimh2dspthqb"]
 
 [ext_resource type="Texture2D" uid="uid://cqjd5a1nxvsp6" path="res://icon.svg" id="1_c7s6e"]
 [ext_resource type="PackedScene" uid="uid://caqverujckupq" path="res://PlayerCharacter.tscn" id="2_wijl4"]
-[ext_resource type="Script" uid="uid://cd408b6ibiecg" path="res://player_charact.gd" id="3_e0an3"]
-[ext_resource type="PackedScene" uid="uid://flgm1by514fc" path="res://killbox.tscn" id="4_p5pve"]
 [ext_resource type="AudioStream" uid="uid://bmxnl4ebjejdy" path="res://Landing.wav" id="4_urblq"]
-[ext_resource type="PackedScene" uid="uid://bbsb0x2h18dyi" path="res://enemy.tscn" id="6_iw27f"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wijl4"]
 texture = ExtResource("1_c7s6e")
@@ -149,34 +146,12 @@ tile_set = SubResource("TileSet_e0an3")
 
 [node name="CharacterBody2D" parent="." instance=ExtResource("2_wijl4")]
 position = Vector2(-120, -2836)
-script = ExtResource("3_e0an3")
-move_speed = 750.0
-accel = 50.0
-friction = 15.0
-jump_force = -1000.0
-gravity = 2500.0
-max_fall_speed = 2200.0
-dash_speed = 3000.0
-dash_time = 0.15
-dash_cooldown_time = 0.5
-slam_force = 2900.0
-slam_storage_time = 1.0
-wall_slide_speed = 230.0
-wall_climb_speed = 290.0
-wall_jump_force = Vector2(-300, -900)
-max_wall_jumps = 3
-slide_speed = 1200.0
-slide_friction = 5.0
 
 [node name="Landing" type="AudioStreamPlayer2D" parent="CharacterBody2D"]
 position = Vector2(-42, 1104)
 stream = ExtResource("4_urblq")
 
-[node name="killboxie" parent="." instance=ExtResource("4_p5pve")]
-position = Vector2(306, 798)
-scale = Vector2(24.685, 24.685)
+[node name="slamtimer2" type="Timer" parent="CharacterBody2D"]
+wait_time = 0.3
 
-[node name="Area2D" parent="." instance=ExtResource("6_iw27f")]
-position = Vector2(553, -153)
-
-[connection signal="body_entered" from="killboxie" to="CharacterBody2D" method="_on_killboxie_body_entered"]
+[connection signal="timeout" from="CharacterBody2D/slamtimer2" to="CharacterBody2D" method="_on_slamtimer_2_timeout"]
