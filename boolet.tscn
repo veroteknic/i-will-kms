@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://vq1iwwhro7vc"]
+
+[ext_resource type="Texture2D" uid="uid://chsbj77kvnj7i" path="res://boolet.png" id="1_own68"]
+[ext_resource type="Script" uid="uid://l6oycq67e3jg" path="res://boolet.gd" id="1_rtgb6"]
+[ext_resource type="Script" uid="uid://b5cic5rn31ac6" path="res://addons/trail_2d/trail_2d.gd" id="3_0mtl6"]
+
+[sub_resource type="Curve" id="Curve_0mtl6"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.271277, 0.876405), -0.887803, -0.887803, 0, 0, Vector2(0.510638, 0.685393), 0.0, 0.0, 0, 0, Vector2(0.696809, 0.595506), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_rtgb6")
+
+[node name="Boolet" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("1_own68")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+scale = Vector2(3.3, 2.85)
+
+[node name="Trail2D" type="Line2D" parent="."]
+position = Vector2(-3, -1)
+width_curve = SubResource("Curve_0mtl6")
+default_color = Color(0.956863, 0.956863, 0.956863, 1)
+script = ExtResource("3_0mtl6")
+metadata/_custom_type_script = "uid://b5cic5rn31ac6"
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
