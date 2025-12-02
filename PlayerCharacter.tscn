@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://caqverujckupq"]
+[gd_scene load_steps=21 format=3 uid="uid://caqverujckupq"]
 
 [ext_resource type="Script" uid="uid://cuxtvp3i27ipj" path="res://player_character.gd" id="1_x1w70"]
 [ext_resource type="AudioStream" uid="uid://bmxnl4ebjejdy" path="res://Landing.wav" id="4_5lgxq"]
@@ -9,6 +9,9 @@
 [ext_resource type="AudioStream" uid="uid://dsdv70arcc075" path="res://wallcling.wav" id="7_p04tm"]
 [ext_resource type="Texture2D" uid="uid://huxyxj1cjnk7" path="res://Sprite-0003.png" id="8_hpmvu"]
 [ext_resource type="PackedScene" uid="uid://bx4fcg6cwjsqh" path="res://gun.tscn" id="9_hpmvu"]
+[ext_resource type="Script" uid="uid://dtfoilkdcfvgv" path="res://addons/health_hitbox_hurtbox/2d/hurt_box_2d/basic_hurt_box_2d.gd" id="10_nc3gv"]
+[ext_resource type="Script" uid="uid://cobp4qehnuq77" path="res://addons/health_hitbox_hurtbox/resources/health_modifier.gd" id="11_hoyxj"]
+[ext_resource type="Script" uid="uid://dr8bvnfebp76" path="res://addons/health_hitbox_hurtbox/health/health.gd" id="11_nc3gv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jkfty"]
 size = Vector2(104, 457)
@@ -141,6 +144,20 @@ _data = {
 &"gun right": SubResource("Animation_x1w70")
 }
 
+[sub_resource type="Resource" id="Resource_mnpen"]
+script = ExtResource("11_hoyxj")
+incrementer = 0
+multiplier = 1.0
+convert_affect = 0
+convert_type = 0
+
+[sub_resource type="Resource" id="Resource_dgskf"]
+script = ExtResource("11_hoyxj")
+incrementer = 0
+multiplier = 1.0
+convert_affect = 0
+convert_type = 0
+
 [node name="CharacterBody2D" type="CharacterBody2D"]
 scale = Vector2(0.635, 0.635)
 script = ExtResource("1_x1w70")
@@ -199,6 +216,29 @@ libraries = {
 [node name="Node2D" parent="." instance=ExtResource("9_hpmvu")]
 position = Vector2(37.7953, -114.961)
 scale = Vector2(6.915, 6.915)
+
+[node name="HurtBox2D" type="Area2D" parent="." node_paths=PackedStringArray("health")]
+scale = Vector2(1, 1)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("10_nc3gv")
+health = NodePath("Health")
+modifiers = Dictionary[int, ExtResource("11_hoyxj")]({
+1: SubResource("Resource_dgskf"),
+2: SubResource("Resource_mnpen")
+})
+metadata/_custom_type_script = "uid://dtfoilkdcfvgv"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox2D"]
+scale = Vector2(1.5748, 1.5748)
+shape = SubResource("RectangleShape2D_jkfty")
+
+[node name="Health" type="Node" parent="HurtBox2D"]
+script = ExtResource("11_nc3gv")
+current = 3
+max = 3
+revivable = false
+metadata/_custom_type_script = "uid://dr8bvnfebp76"
 
 [connection signal="timeout" from="dash_timer" to="." method="_on_dash_timer_timeout"]
 [connection signal="timeout" from="dash_cooldown" to="." method="_on_dash_cooldown_timeout"]

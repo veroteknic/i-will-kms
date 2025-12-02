@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=4 uid="uid://bnimh2dspthqb"]
+[gd_scene load_steps=7 format=4 uid="uid://bnimh2dspthqb"]
 
 [ext_resource type="Texture2D" uid="uid://cqjd5a1nxvsp6" path="res://icon.svg" id="1_c7s6e"]
 [ext_resource type="PackedScene" uid="uid://caqverujckupq" path="res://PlayerCharacter.tscn" id="2_wijl4"]
+[ext_resource type="PackedScene" uid="uid://bbsb0x2h18dyi" path="res://enemy.tscn" id="4_p5pve"]
 [ext_resource type="AudioStream" uid="uid://bmxnl4ebjejdy" path="res://Landing.wav" id="4_urblq"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_wijl4"]
@@ -155,5 +156,8 @@ stream = ExtResource("4_urblq")
 wait_time = 0.3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="Node2D" parent="." instance=ExtResource("4_p5pve")]
+position = Vector2(1087, -131)
 
 [connection signal="timeout" from="CharacterBody2D/slamtimer2" to="CharacterBody2D" method="_on_slamtimer_2_timeout"]
