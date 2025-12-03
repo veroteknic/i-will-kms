@@ -1,18 +1,20 @@
-[gd_scene load_steps=8 format=3 uid="uid://bbsb0x2h18dyi"]
+[gd_scene load_steps=12 format=3 uid="uid://bbsb0x2h18dyi"]
 
 [ext_resource type="Script" uid="uid://dr8bvnfebp76" path="res://addons/health_hitbox_hurtbox/health/health.gd" id="1_iifgy"]
 [ext_resource type="Script" uid="uid://dtfoilkdcfvgv" path="res://addons/health_hitbox_hurtbox/2d/hurt_box_2d/basic_hurt_box_2d.gd" id="2_epg4t"]
 [ext_resource type="Script" uid="uid://cobp4qehnuq77" path="res://addons/health_hitbox_hurtbox/resources/health_modifier.gd" id="3_3yqyl"]
 [ext_resource type="Texture2D" uid="uid://c13eyo7u3qrci" path="res://Sprite-0009.png" id="4_wujgv"]
+[ext_resource type="Script" uid="uid://chrsg1fc53qs3" path="res://addons/health_hitbox_hurtbox/2d/hit_box_2d/basic_hit_box_2d.gd" id="5_3yqyl"]
+[ext_resource type="Script" uid="uid://hrwhd52e5mkq" path="res://addons/health_hitbox_hurtbox/resources/health_action.gd" id="6_wujgv"]
 
-[sub_resource type="Resource" id="Resource_hb8ge"]
+[sub_resource type="Resource" id="Resource_3yqyl"]
 script = ExtResource("3_3yqyl")
 incrementer = 0
 multiplier = 1.0
 convert_affect = 0
 convert_type = 0
 
-[sub_resource type="Resource" id="Resource_e1ltt"]
+[sub_resource type="Resource" id="Resource_wujgv"]
 script = ExtResource("3_3yqyl")
 incrementer = 0
 multiplier = 1.0
@@ -21,6 +23,18 @@ convert_type = 0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iifgy"]
 size = Vector2(38.5, 61.5)
+
+[sub_resource type="Resource" id="Resource_dxifv"]
+script = ExtResource("6_wujgv")
+affect = 1
+type = 2
+amount = 1
+
+[sub_resource type="Resource" id="Resource_hb8ge"]
+script = ExtResource("6_wujgv")
+affect = 1
+type = 2
+amount = 1
 
 [node name="Node2D" type="Area2D"]
 
@@ -38,8 +52,8 @@ collision_mask = 2
 script = ExtResource("2_epg4t")
 health = NodePath("../Health")
 modifiers = Dictionary[int, ExtResource("3_3yqyl")]({
-1: SubResource("Resource_e1ltt"),
-2: SubResource("Resource_hb8ge")
+1: SubResource("Resource_3yqyl"),
+2: SubResource("Resource_wujgv")
 })
 metadata/_custom_type_script = "uid://dtfoilkdcfvgv"
 
@@ -56,4 +70,16 @@ texture = ExtResource("4_wujgv")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(11, -4)
 scale = Vector2(2.86, 2.86)
+shape = SubResource("RectangleShape2D_iifgy")
+
+[node name="BasicHitBox2D" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("5_3yqyl")
+actions = Array[ExtResource("6_wujgv")]([SubResource("Resource_dxifv"), SubResource("Resource_hb8ge")])
+metadata/_custom_type_script = "uid://chrsg1fc53qs3"
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="BasicHitBox2D"]
+position = Vector2(7, -2)
+scale = Vector2(4.325, 4.325)
 shape = SubResource("RectangleShape2D_iifgy")

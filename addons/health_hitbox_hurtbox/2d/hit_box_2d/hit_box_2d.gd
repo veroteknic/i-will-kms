@@ -32,6 +32,9 @@ func _ready() -> void:
 func _on_area_entered(area: Area2D) -> void:
 	if ignore_collisions:
 		return
+		
+	if area is HurtBox2D:
+		$"..".queue_free()
 	
 	if area is HitBox2D:
 		hit_box_entered.emit(area)

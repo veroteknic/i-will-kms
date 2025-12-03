@@ -7,7 +7,7 @@ const GROUND_ACCEL = 12000.0
 const FRICTION = 8000.0
 
 # jump / slam
-const JUMP_FORCE = -1500.0
+const JUMP_FORCE = -1700.0
 const SLAM_SPEED = 3500.0
 const MIN_SLAM_HEIGHT = 50.0
 

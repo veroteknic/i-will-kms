@@ -144,14 +144,14 @@ _data = {
 &"gun right": SubResource("Animation_x1w70")
 }
 
-[sub_resource type="Resource" id="Resource_mnpen"]
+[sub_resource type="Resource" id="Resource_nc3gv"]
 script = ExtResource("11_hoyxj")
 incrementer = 0
 multiplier = 1.0
 convert_affect = 0
 convert_type = 0
 
-[sub_resource type="Resource" id="Resource_dgskf"]
+[sub_resource type="Resource" id="Resource_hoyxj"]
 script = ExtResource("11_hoyxj")
 incrementer = 0
 multiplier = 1.0
@@ -218,14 +218,13 @@ position = Vector2(37.7953, -114.961)
 scale = Vector2(6.915, 6.915)
 
 [node name="HurtBox2D" type="Area2D" parent="." node_paths=PackedStringArray("health")]
-scale = Vector2(1, 1)
-collision_layer = 2
-collision_mask = 2
+collision_layer = 4
+collision_mask = 4
 script = ExtResource("10_nc3gv")
 health = NodePath("Health")
 modifiers = Dictionary[int, ExtResource("11_hoyxj")]({
-1: SubResource("Resource_dgskf"),
-2: SubResource("Resource_mnpen")
+1: SubResource("Resource_nc3gv"),
+2: SubResource("Resource_hoyxj")
 })
 metadata/_custom_type_script = "uid://dtfoilkdcfvgv"
 
