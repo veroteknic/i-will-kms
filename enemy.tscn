@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bbsb0x2h18dyi"]
+[gd_scene load_steps=13 format=3 uid="uid://bbsb0x2h18dyi"]
 
 [ext_resource type="Script" uid="uid://dr8bvnfebp76" path="res://addons/health_hitbox_hurtbox/health/health.gd" id="1_iifgy"]
 [ext_resource type="Script" uid="uid://dtfoilkdcfvgv" path="res://addons/health_hitbox_hurtbox/2d/hurt_box_2d/basic_hurt_box_2d.gd" id="2_epg4t"]
@@ -31,6 +31,12 @@ type = 2
 amount = 1
 
 [sub_resource type="Resource" id="Resource_hb8ge"]
+script = ExtResource("6_wujgv")
+affect = 1
+type = 2
+amount = 1
+
+[sub_resource type="Resource" id="Resource_e1ltt"]
 script = ExtResource("6_wujgv")
 affect = 1
 type = 2
@@ -76,7 +82,7 @@ shape = SubResource("RectangleShape2D_iifgy")
 collision_layer = 4
 collision_mask = 4
 script = ExtResource("5_3yqyl")
-actions = Array[ExtResource("6_wujgv")]([SubResource("Resource_dxifv"), SubResource("Resource_hb8ge")])
+actions = Array[ExtResource("6_wujgv")]([SubResource("Resource_dxifv"), SubResource("Resource_hb8ge"), SubResource("Resource_e1ltt")])
 metadata/_custom_type_script = "uid://chrsg1fc53qs3"
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="BasicHitBox2D"]

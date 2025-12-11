@@ -1,0 +1,84 @@
+[gd_scene load_steps=11 format=3 uid="uid://cixjk4hq0lpy0"]
+
+[ext_resource type="Script" uid="uid://dew7obr3g0h4d" path="res://grenade.gd" id="1_hoyxj"]
+[ext_resource type="Texture2D" uid="uid://clr2fr47junqs" path="res://addons/grend.png" id="2_aeyyv"]
+[ext_resource type="AudioStream" uid="uid://bappaa0uoi8gm" path="res://Bluezone_BC0296_steampunk_weapon_gun_shot_026_02.wav" id="3_aeyyv"]
+[ext_resource type="Script" uid="uid://chrsg1fc53qs3" path="res://addons/health_hitbox_hurtbox/2d/hit_box_2d/basic_hit_box_2d.gd" id="4_o1udh"]
+[ext_resource type="Script" uid="uid://hrwhd52e5mkq" path="res://addons/health_hitbox_hurtbox/resources/health_action.gd" id="5_aeyyv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oi1vt"]
+size = Vector2(141, 177)
+
+[sub_resource type="Resource" id="Resource_oi1vt"]
+script = ExtResource("5_aeyyv")
+affect = 1
+type = 2
+amount = 3
+metadata/_custom_type_script = "uid://hrwhd52e5mkq"
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hoyxj"]
+radius = 35.2518
+height = 89.6882
+
+[sub_resource type="Gradient" id="Gradient_aeyyv"]
+colors = PackedColorArray(0.631972, 0.53672, 0.990678, 1, 0.795506, 0.00125063, 0.899691, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_oi1vt"]
+gradient = SubResource("Gradient_aeyyv")
+width = 16
+height = 16
+fill = 1
+fill_from = Vector2(0.482906, 0.495726)
+
+[node name="Grenade" type="RigidBody2D"]
+mass = 6.496
+script = ExtResource("1_hoyxj")
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(8, 8)
+texture = ExtResource("2_aeyyv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 5.5)
+shape = SubResource("RectangleShape2D_oi1vt")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_aeyyv")
+
+[node name="BasicHitBox2D" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("4_o1udh")
+amount = 3
+actions = Array[ExtResource("5_aeyyv")]([SubResource("Resource_oi1vt")])
+metadata/_custom_type_script = "uid://chrsg1fc53qs3"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BasicHitBox2D"]
+scale = Vector2(4.17, 4.17)
+shape = SubResource("CapsuleShape2D_hoyxj")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+position = Vector2(0, 3)
+emitting = false
+amount = 24
+texture = SubResource("GradientTexture2D_oi1vt")
+lifetime = 2.35
+one_shot = true
+speed_scale = 16.09
+explosiveness = 0.1
+randomness = 0.52
+emission_shape = 1
+emission_sphere_radius = 0.01
+spread = 180.0
+gravity = Vector2(0, -1)
+initial_velocity_max = 304.33
+angular_velocity_max = 651.45
+damping_max = 30.705
+scale_amount_max = 5.0
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 61.928
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

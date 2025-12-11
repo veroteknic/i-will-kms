@@ -20,7 +20,7 @@ metadata/_custom_type_script = "uid://hrwhd52e5mkq"
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3ab2f"]
 size = Vector2(6.66667, 4)
 
-[node name="Node2D" type="Node2D"]
+[node name="Node2D2" type="Node2D"]
 script = ExtResource("1_rtgb6")
 
 [node name="Boolet" type="Sprite2D" parent="."]

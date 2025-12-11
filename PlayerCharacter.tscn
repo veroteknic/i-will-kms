@@ -1,6 +1,7 @@
-[gd_scene load_steps=21 format=3 uid="uid://caqverujckupq"]
+[gd_scene load_steps=22 format=3 uid="uid://caqverujckupq"]
 
 [ext_resource type="Script" uid="uid://cuxtvp3i27ipj" path="res://player_character.gd" id="1_x1w70"]
+[ext_resource type="Texture2D" uid="uid://bsy52jy7iqfyo" path="res://dash.png" id="2_hoyxj"]
 [ext_resource type="AudioStream" uid="uid://bmxnl4ebjejdy" path="res://Landing.wav" id="4_5lgxq"]
 [ext_resource type="AudioStream" uid="uid://66fqg6pw7ifu" path="res://Dodge3.wav" id="4_ew46a"]
 [ext_resource type="AudioStream" uid="uid://kvvpibdce8kx" path="res://Bluezone-Autobots-footstep-013.wav" id="5_5lgxq"]
@@ -144,14 +145,14 @@ _data = {
 &"gun right": SubResource("Animation_x1w70")
 }
 
-[sub_resource type="Resource" id="Resource_nc3gv"]
+[sub_resource type="Resource" id="Resource_hoyxj"]
 script = ExtResource("11_hoyxj")
 incrementer = 0
 multiplier = 1.0
 convert_affect = 0
 convert_type = 0
 
-[sub_resource type="Resource" id="Resource_hoyxj"]
+[sub_resource type="Resource" id="Resource_mnpen"]
 script = ExtResource("11_hoyxj")
 incrementer = 0
 multiplier = 1.0
@@ -162,12 +163,18 @@ convert_type = 0
 scale = Vector2(0.635, 0.635)
 script = ExtResource("1_x1w70")
 
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(-36.5512, 7.28349)
+scale = Vector2(11.0927, 11.5039)
+texture = ExtResource("2_hoyxj")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_jkfty")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 scale = Vector2(3, 3)
-zoom = Vector2(0.985, 0.985)
+zoom = Vector2(0.73, 0.73)
 position_smoothing_enabled = true
 position_smoothing_speed = 10.0
 drag_horizontal_enabled = true
@@ -223,8 +230,8 @@ collision_mask = 4
 script = ExtResource("10_nc3gv")
 health = NodePath("Health")
 modifiers = Dictionary[int, ExtResource("11_hoyxj")]({
-1: SubResource("Resource_nc3gv"),
-2: SubResource("Resource_hoyxj")
+1: SubResource("Resource_hoyxj"),
+2: SubResource("Resource_mnpen")
 })
 metadata/_custom_type_script = "uid://dtfoilkdcfvgv"
 
@@ -238,6 +245,9 @@ current = 3
 max = 3
 revivable = false
 metadata/_custom_type_script = "uid://dr8bvnfebp76"
+
+[node name="dash" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_ew46a")
 
 [connection signal="timeout" from="dash_timer" to="." method="_on_dash_timer_timeout"]
 [connection signal="timeout" from="dash_cooldown" to="." method="_on_dash_cooldown_timeout"]

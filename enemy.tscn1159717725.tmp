@@ -1,0 +1,51 @@
+[gd_scene load_steps=5 format=3 uid="uid://bbsb0x2h18dyi"]
+
+[ext_resource type="Texture2D" uid="uid://c13eyo7u3qrci" path="res://Sprite-0009.png" id="4_wujgv"]
+
+[sub_resource type="GDScript" id="GDScript_7k104"]
+script/source = "class_name Health extends Node
+## Simple health system with damage, healing, and invincibility frames.
+
+## Affect types for compatibility with existing addon systems.
+enum Affect { NONE, DAMAGE, HEAL }
+
+
+func _ready() -> void:
+	pass
+"
+
+[sub_resource type="GDScript" id="GDScript_4gyqm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iifgy"]
+size = Vector2(38.5, 58.4859)
+
+[node name="Node2D" type="Area2D"]
+
+[node name="Health" type="Node" parent="."]
+script = SubResource("GDScript_7k104")
+metadata/_custom_type_script = "uid://dr8bvnfebp76"
+
+[node name="BasicHurtBox2D" type="Area2D" parent="."]
+position = Vector2(17, 14)
+scale = Vector2(3, 3)
+collision_layer = 16
+collision_mask = 32
+script = SubResource("GDScript_4gyqm")
+metadata/_custom_type_script = "uid://dtfoilkdcfvgv"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BasicHurtBox2D"]
+position = Vector2(-1.91667, -6.58333)
+shape = SubResource("RectangleShape2D_iifgy")
+
+[node name="Icon" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(17, 14)
+scale = Vector2(3, 3)
+texture = ExtResource("4_wujgv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(11, -9.6348)
+scale = Vector2(2.86, 2.86)
+shape = SubResource("RectangleShape2D_iifgy")
+
+[node name="Timer" type="Timer" parent="."]
