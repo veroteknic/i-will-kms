@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 # movement
-const MOVE_SPEED = 900.0
+var movement_speed = 900.0
 const AIR_ACCEL = 5000.0
 const GROUND_ACCEL = 12000.0
 const FRICTION = 8000.0
@@ -17,19 +17,19 @@ const SLIDE_DECAY = 0.80
 const SLIDE_MIN_SPEED = 150.0
 var sliding = false
 
-# running / sprint
-const RUN_SPEED = 1400.0
-var running: bool = false
-# dash
+#  dash
 const DASH_SPEED = 2000
 const DASH_DURATION = 0.5
-const DASH_COOLDOWN = 0.5
+const DASH_COOLDOWN = 0.3
+var dashes = 3
 var dash_available = true
 var dashing = false
 var last_facing_direction = 1.0
+var run_available = true
 @onready var arm: Node2D = $Node2D
 @onready var dash: AudioStreamPlayer2D = $dash
-
+# jumpy shit
+var jump_count = 0
 func _physics_process(delta: float) -> void: 
 	var input_x = Input.get_axis("left", "right")
 	if dashing == true:
@@ -59,13 +59,23 @@ func _physics_process(delta: float) -> void:
 		last_facing_direction = input_x
 
 	# Running (hold 'run' to sprint while on the ground)
-	running = Input.is_action_pressed("run") and is_on_floor() and input_x != 0
 	
 	# Dash
-	if Input.is_action_just_pressed("dash") and dash_available:
+	if Input.is_action_just_pressed("dash") and dash_available and dashes == 3:
 		dash.play()
 		start_dash()
-	
+		dashes = 2
+	if Input.is_action_just_pressed("dash") and dash_available and dashes == 2:
+		dash.play()
+		start_dash()
+		dashes = 1
+	if Input.is_action_just_pressed("dash") and dash_available and dashes == 1:
+		dash.play()
+		start_dash()
+		dashes = 0
+		$"dash reset".start()
+	if Input.is_action_just_pressed("dash") and dash_available and dashes == 0:
+		pass
 	if dashing:
 		# During dash, move in dash direction and bypass other movement
 		pass
@@ -77,6 +87,7 @@ func _physics_process(delta: float) -> void:
 		# Jump
 		if Input.is_action_just_pressed("jump") and is_on_floor():
 			velocity.y = JUMP_FORCE
+
 
 		# Slam
 		if Input.is_action_just_pressed("slam") and not is_on_floor() and velocity.y < MIN_SLAM_HEIGHT:
@@ -94,12 +105,12 @@ func _physics_process(delta: float) -> void:
 		else:
 			if is_on_floor():
 				if input_x != 0:
-					var target_speed = input_x * (RUN_SPEED if running else MOVE_SPEED)
+					var target_speed = input_x * (movement_speed)
 					velocity.x = move_toward(velocity.x, target_speed, GROUND_ACCEL * delta)
 				else:
 					velocity.x = move_toward(velocity.x, 0, FRICTION * delta)
 			else:
-				var target = input_x * MOVE_SPEED
+				var target = input_x * movement_speed
 				velocity.x = move_toward(velocity.x, target, AIR_ACCEL * delta)
 
 	move_and_slide()
@@ -114,3 +125,8 @@ func start_dash() -> void:
 	dashing = false
 	await get_tree().create_timer(DASH_COOLDOWN).timeout
 	dash_available = true
+
+
+func _on_dash_reset_timeout() -> void:
+	print("you can dash again")
+	dashes = 3

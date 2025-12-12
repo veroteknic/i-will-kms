@@ -31,7 +31,7 @@ func _process(_delta: float) -> void:
 	
 	# Determine flipped state: flip when pointing left (120-240 degrees)
 	# This avoids the 90/270 degree zones to prevent spazzing
-	var should_flip = (deg > 120 and deg < 240)
+	var should_flip = (deg > 120 and deg < 239)
 	
 	if should_flip != flipped:
 		flipped = should_flip
