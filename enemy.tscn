@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bbsb0x2h18dyi"]
+[gd_scene format=3 uid="uid://bbsb0x2h18dyi"]
 
 [ext_resource type="Script" uid="uid://dr8bvnfebp76" path="res://addons/health_hitbox_hurtbox/health/health.gd" id="1_iifgy"]
 [ext_resource type="Script" uid="uid://ypgfelo0448h" path="res://enemy.gd" id="1_wujgv"]
@@ -8,96 +8,74 @@
 [ext_resource type="Script" uid="uid://chrsg1fc53qs3" path="res://addons/health_hitbox_hurtbox/2d/hit_box_2d/basic_hit_box_2d.gd" id="5_3yqyl"]
 [ext_resource type="Script" uid="uid://hrwhd52e5mkq" path="res://addons/health_hitbox_hurtbox/resources/health_action.gd" id="6_wujgv"]
 
-[sub_resource type="Resource" id="Resource_3yqyl"]
-script = ExtResource("3_3yqyl")
-incrementer = 0
-multiplier = 1.0
-convert_affect = 0
-convert_type = 0
-
 [sub_resource type="Resource" id="Resource_wujgv"]
 script = ExtResource("3_3yqyl")
-incrementer = 0
-multiplier = 1.0
-convert_affect = 0
-convert_type = 0
+
+[sub_resource type="Resource" id="Resource_g2u8i"]
+script = ExtResource("3_3yqyl")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wujgv"]
+size = Vector2(31.333334, 65.00001)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iifgy"]
-size = Vector2(38.5, 61.5)
+size = Vector2(25.08145, 59.79021)
 
 [sub_resource type="Resource" id="Resource_dxifv"]
 script = ExtResource("6_wujgv")
-affect = 1
-type = 2
-amount = 1
 
 [sub_resource type="Resource" id="Resource_hb8ge"]
 script = ExtResource("6_wujgv")
-affect = 1
-type = 2
-amount = 1
 
 [sub_resource type="Resource" id="Resource_e1ltt"]
 script = ExtResource("6_wujgv")
-affect = 1
-type = 2
-amount = 1
 
 [sub_resource type="Resource" id="Resource_pwjut"]
 script = ExtResource("6_wujgv")
-affect = 1
-type = 2
-amount = 1
 
 [sub_resource type="Resource" id="Resource_n0g06"]
 script = ExtResource("6_wujgv")
-affect = 1
-type = 2
-amount = 1
 
 [sub_resource type="Resource" id="Resource_ar8e5"]
 script = ExtResource("6_wujgv")
-affect = 1
-type = 2
-amount = 1
 
 [sub_resource type="Resource" id="Resource_doop2"]
 script = ExtResource("6_wujgv")
-affect = 1
-type = 2
-amount = 1
 
 [sub_resource type="Resource" id="Resource_5hcft"]
 script = ExtResource("6_wujgv")
-affect = 1
-type = 2
-amount = 1
 
 [sub_resource type="Resource" id="Resource_nnovl"]
 script = ExtResource("6_wujgv")
-affect = 1
-type = 2
-amount = 1
 
 [sub_resource type="Resource" id="Resource_jmwgi"]
 script = ExtResource("6_wujgv")
-affect = 1
-type = 2
-amount = 1
 
-[node name="Node2D" type="CharacterBody2D"]
+[sub_resource type="Resource" id="Resource_otto8"]
+script = ExtResource("6_wujgv")
+
+[sub_resource type="Resource" id="Resource_8q82m"]
+script = ExtResource("6_wujgv")
+
+[sub_resource type="Resource" id="Resource_epc7x"]
+script = ExtResource("6_wujgv")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hb8ge"]
+size = Vector2(16.878613, 37.687862)
+
+[node name="Node2D" type="CharacterBody2D" unique_id=1157964288]
 script = ExtResource("1_wujgv")
 
-[node name="Health" type="Node" parent="."]
+[node name="Health" type="Node" parent="." unique_id=905444232]
 script = ExtResource("1_iifgy")
 current = 3
 max = 3
 metadata/_custom_type_script = "uid://dr8bvnfebp76"
 
-[node name="right wall" type="RayCast2D" parent="."]
+[node name="right wall" type="RayCast2D" parent="." unique_id=871723837]
 target_position = Vector2(93, 1)
+collision_mask = 2
 
-[node name="BasicHurtBox2D" type="Area2D" parent="." node_paths=PackedStringArray("health")]
+[node name="BasicHurtBox2D" type="Area2D" parent="." unique_id=185322466 node_paths=PackedStringArray("health")]
 position = Vector2(17, 14)
 scale = Vector2(3, 3)
 collision_layer = 2
@@ -105,43 +83,44 @@ collision_mask = 2
 script = ExtResource("2_epg4t")
 health = NodePath("../Health")
 modifiers = Dictionary[int, ExtResource("3_3yqyl")]({
-1: SubResource("Resource_3yqyl"),
-2: SubResource("Resource_wujgv")
+1: SubResource("Resource_wujgv"),
+2: SubResource("Resource_g2u8i")
 })
 metadata/_custom_type_script = "uid://dtfoilkdcfvgv"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BasicHurtBox2D"]
-position = Vector2(-1.91667, -6.58333)
-shape = SubResource("RectangleShape2D_iifgy")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BasicHurtBox2D" unique_id=884488427]
+position = Vector2(-4, -7.333333)
+shape = SubResource("RectangleShape2D_wujgv")
 
-[node name="Icon" type="Sprite2D" parent="."]
+[node name="Icon" type="Sprite2D" parent="." unique_id=1619017865]
 texture_filter = 1
 position = Vector2(17, 14)
 scale = Vector2(3, 3)
 texture = ExtResource("4_wujgv")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(11, -4)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=864655323]
+position = Vector2(14.133526, -5.499999)
 scale = Vector2(2.86, 2.86)
 shape = SubResource("RectangleShape2D_iifgy")
 
-[node name="BasicHitBox2D" type="Area2D" parent="."]
+[node name="BasicHitBox2D" type="Area2D" parent="." unique_id=1943861260]
 collision_layer = 4
 collision_mask = 4
 script = ExtResource("5_3yqyl")
-actions = Array[ExtResource("6_wujgv")]([SubResource("Resource_dxifv"), SubResource("Resource_hb8ge"), SubResource("Resource_e1ltt"), SubResource("Resource_pwjut"), SubResource("Resource_n0g06"), SubResource("Resource_ar8e5"), SubResource("Resource_doop2"), SubResource("Resource_5hcft"), SubResource("Resource_nnovl"), SubResource("Resource_jmwgi")])
+actions = Array[ExtResource("6_wujgv")]([SubResource("Resource_dxifv"), SubResource("Resource_hb8ge"), SubResource("Resource_e1ltt"), SubResource("Resource_pwjut"), SubResource("Resource_n0g06"), SubResource("Resource_ar8e5"), SubResource("Resource_doop2"), SubResource("Resource_5hcft"), SubResource("Resource_nnovl"), SubResource("Resource_jmwgi"), SubResource("Resource_otto8"), SubResource("Resource_8q82m"), SubResource("Resource_epc7x")])
 metadata/_custom_type_script = "uid://chrsg1fc53qs3"
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="BasicHitBox2D"]
-position = Vector2(7, -2)
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="BasicHitBox2D" unique_id=1409432677]
+position = Vector2(7.999999, -7)
 scale = Vector2(4.325, 4.325)
-shape = SubResource("RectangleShape2D_iifgy")
+shape = SubResource("RectangleShape2D_hb8ge")
 
-[node name="left" type="RayCast2D" parent="."]
+[node name="left" type="RayCast2D" parent="." unique_id=2005793785]
 target_position = Vector2(-35, 112)
 
-[node name="right" type="RayCast2D" parent="."]
+[node name="right" type="RayCast2D" parent="." unique_id=35097543]
 target_position = Vector2(59, 107)
 
-[node name="left wall" type="RayCast2D" parent="."]
+[node name="left wall" type="RayCast2D" parent="." unique_id=135647443]
 target_position = Vector2(-108, -1)
+collision_mask = 2

@@ -38,9 +38,11 @@ func _process(_delta: float) -> void:
 
 	# Apply scale and animation based on flipped
 	if flipped:
+		$"../AnimatedSprite2D".flip_h = true
 		scale.y = -7
 		animation_player.play("gun left")
 	else:
+		$"../AnimatedSprite2D".flip_h = false
 		scale.y = 7
 		animation_player.play("gun right")
 	

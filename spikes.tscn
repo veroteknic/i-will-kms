@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://bcr51apnsnvba"]
+
+[ext_resource type="TileSet" uid="uid://b0xbh7dc6jhnd" path="res://map.tres" id="1_8fhau"]
+[ext_resource type="Script" uid="uid://chrsg1fc53qs3" path="res://addons/health_hitbox_hurtbox/2d/hit_box_2d/basic_hit_box_2d.gd" id="2_ds4fp"]
+[ext_resource type="Script" uid="uid://hrwhd52e5mkq" path="res://addons/health_hitbox_hurtbox/resources/health_action.gd" id="3_k4mtd"]
+
+[sub_resource type="Resource" id="Resource_688ft"]
+script = ExtResource("3_k4mtd")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i801f"]
+size = Vector2(33, 31)
+
+[node name="Node2D" type="Area2D" unique_id=803324040]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=69186821]
+texture_filter = 1
+tile_map_data = PackedByteArray(0, 0, 0, 0, 255, 255, 3, 0, 2, 0, 12, 0, 0, 0)
+tile_set = ExtResource("1_8fhau")
+
+[node name="BasicHitBox2D" type="Area2D" parent="." unique_id=843066721]
+script = ExtResource("2_ds4fp")
+actions = Array[ExtResource("3_k4mtd")]([SubResource("Resource_688ft")])
+metadata/_custom_type_script = "uid://chrsg1fc53qs3"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BasicHitBox2D" unique_id=400525117]
+position = Vector2(16.5, -16.5)
+shape = SubResource("RectangleShape2D_i801f")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1128297174]
+position = Vector2(17, -16)
+shape = SubResource("RectangleShape2D_i801f")

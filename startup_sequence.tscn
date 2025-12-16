@@ -1,0 +1,70 @@
+[gd_scene format=3 uid="uid://clpx1howka3yr"]
+
+[ext_resource type="Script" uid="uid://bigcfyacvshrd" path="res://addons/type_writer_label/classes/type_writer_label.gd" id="1_spsd3"]
+
+[sub_resource type="Theme" id="Theme_spsd3"]
+
+[node name="startup sequence" type="Control" unique_id=1195614864]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1808615435]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="TypeWriterLabel" type="RichTextLabel" parent="." unique_id=418254105 node_paths=PackedStringArray("typing_sound_player")]
+layout_mode = 0
+offset_right = 810.0
+offset_bottom = 891.0
+text = "STARTING BOOT SEQUENCE  .  .  .   
+
+CHECKING MEMORY  .  .  . 
+
+SIGNAL FOUND
+
+CORE ONLINE
+
+
+OBJECTIVE: PROTECT ANY REMAINING HUMAN LIFE
+SEARCHING FOR HUMAN LIFE . . .
+NORTH AMERICA . . .
+AFRICA . . .
+ASIA . . .
+OCEANIA . . .
+HUMAN SIGNATURES FOUND: 0
+NEW OBJECTIVE: EXECUTE PARIDISO CONTINGENCY
+
+"
+script = ExtResource("1_spsd3")
+typing_speed = 25.0
+typing_sound_player = NodePath("../AudioStreamPlayer2D")
+stop_after_character = true
+stop_characters = Array[String]([".", ""])
+metadata/_custom_type_script = "uid://bigcfyacvshrd"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer" parent="." unique_id=1626274331]
+
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=1775444569]
+layout_mode = 0
+offset_left = -1.0
+offset_top = 411.0
+offset_right = 410.0
+offset_bottom = 512.0
+theme = SubResource("Theme_spsd3")
+theme_override_colors/default_color = Color(0.98039216, 0, 0, 1)
+text = "MANKIND IS DEAD
+YOU REMAIN
+SAVE US ALL"
+script = ExtResource("1_spsd3")
+typing_speed = 25.0
+wait_before_start = 30.0
+metadata/_custom_type_script = "uid://bigcfyacvshrd"
