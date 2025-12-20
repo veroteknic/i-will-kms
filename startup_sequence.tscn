@@ -1,6 +1,9 @@
 [gd_scene format=3 uid="uid://clpx1howka3yr"]
 
+[ext_resource type="Material" uid="uid://2de617cypegi" path="res://startup_sequence.tres" id="1_0ri63"]
 [ext_resource type="Script" uid="uid://bigcfyacvshrd" path="res://addons/type_writer_label/classes/type_writer_label.gd" id="1_spsd3"]
+[ext_resource type="Script" uid="uid://bps7iucylftwu" path="res://startup_sequence.gd" id="2_l5d0m"]
+[ext_resource type="AudioStream" uid="uid://loy8jkyhacn1" path="res://spacebar-click-keyboard-199448.wav" id="2_lvxs5"]
 
 [sub_resource type="Theme" id="Theme_spsd3"]
 
@@ -11,8 +14,11 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 4
+script = ExtResource("2_l5d0m")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1808615435]
+material = ExtResource("1_0ri63")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -21,13 +27,36 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=1775444569 node_paths=PackedStringArray("typing_sound_player")]
+layout_mode = 0
+offset_left = 153.0
+offset_top = 491.0
+offset_right = 564.0
+offset_bottom = 592.0
+theme = SubResource("Theme_spsd3")
+theme_override_colors/default_color = Color(0.98039216, 0, 0, 1)
+text = "MANKIND IS DEAD
+YOU REMAIN
+SAVE US ALL"
+script = ExtResource("1_spsd3")
+typing_speed = 25.0
+typing_sound_player = NodePath("../AudioStreamPlayer2D")
+wait_before_start = 35.0
+wait_after_finish = 10.0
+metadata/_custom_type_script = "uid://bigcfyacvshrd"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer" parent="." unique_id=1626274331]
+stream = ExtResource("2_lvxs5")
+
 [node name="TypeWriterLabel" type="RichTextLabel" parent="." unique_id=418254105 node_paths=PackedStringArray("typing_sound_player")]
 layout_mode = 0
-offset_right = 810.0
-offset_bottom = 891.0
-text = "STARTING BOOT SEQUENCE  .  .  .   
+offset_left = 94.0
+offset_top = 55.0
+offset_right = 904.0
+offset_bottom = 946.0
+text = "STARTING BOOT SEQUENCE   .  .  .   
 
-CHECKING MEMORY  .  .  . 
+CHECKING MEMORY   .  .  . 
 
 SIGNAL FOUND
 
@@ -51,20 +80,8 @@ stop_after_character = true
 stop_characters = Array[String]([".", ""])
 metadata/_custom_type_script = "uid://bigcfyacvshrd"
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer" parent="." unique_id=1626274331]
+[node name="Timer" type="Timer" parent="." unique_id=1536722671]
+wait_time = 0.3
 
-[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=1775444569]
-layout_mode = 0
-offset_left = -1.0
-offset_top = 411.0
-offset_right = 410.0
-offset_bottom = 512.0
-theme = SubResource("Theme_spsd3")
-theme_override_colors/default_color = Color(0.98039216, 0, 0, 1)
-text = "MANKIND IS DEAD
-YOU REMAIN
-SAVE US ALL"
-script = ExtResource("1_spsd3")
-typing_speed = 25.0
-wait_before_start = 30.0
-metadata/_custom_type_script = "uid://bigcfyacvshrd"
+[connection signal="typewriting_done" from="RichTextLabel" to="." method="_on_rich_text_label_typewriting_done"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

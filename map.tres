@@ -1,6 +1,10 @@
 [gd_resource type="TileSet" format=3 uid="uid://b0xbh7dc6jhnd"]
 
+[ext_resource type="PackedScene" uid="uid://bcr51apnsnvba" path="res://spikes.tscn" id="1_dobfw"]
 [ext_resource type="Texture2D" uid="uid://bbvvhuixv15jp" path="res://tilemapss.png" id="1_l44ik"]
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_e6qn0"]
+scenes/1/scene = ExtResource("1_dobfw")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_iw27f"]
 texture = ExtResource("1_l44ik")
@@ -288,3 +292,4 @@ terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
 custom_data_layer_0/name = "footsteps"
 custom_data_layer_0/type = 4
 sources/3 = SubResource("TileSetAtlasSource_iw27f")
+sources/0 = SubResource("TileSetScenesCollectionSource_e6qn0")

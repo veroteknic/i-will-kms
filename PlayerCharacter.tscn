@@ -6,8 +6,6 @@
 [ext_resource type="AudioStream" uid="uid://6r7jmji6jx7q" path="res://fs_tile_02.wav" id="3_dgskf"]
 [ext_resource type="AudioStream" uid="uid://bmxnl4ebjejdy" path="res://Landing.wav" id="4_5lgxq"]
 [ext_resource type="AudioStream" uid="uid://d0pnsmohv3ikk" path="res://fs_tile_03.wav" id="4_6iixl"]
-[ext_resource type="AudioStream" uid="uid://66fqg6pw7ifu" path="res://Dodge3.wav" id="4_ew46a"]
-[ext_resource type="AudioStream" uid="uid://kvvpibdce8kx" path="res://Bluezone-Autobots-footstep-013.wav" id="5_5lgxq"]
 [ext_resource type="AudioStream" uid="uid://cnglrs02mu2hm" path="res://fs_tile_04.wav" id="5_nvyeq"]
 [ext_resource type="AudioStream" uid="uid://igy0kn6u02le" path="res://fs_tile_05.wav" id="6_e7kth"]
 [ext_resource type="AudioStream" uid="uid://vlkjextq2p4x" path="res://LandingHeavy.wav" id="6_ew46a"]
@@ -20,6 +18,7 @@
 [ext_resource type="Script" uid="uid://dtfoilkdcfvgv" path="res://addons/health_hitbox_hurtbox/2d/hurt_box_2d/basic_hurt_box_2d.gd" id="10_nc3gv"]
 [ext_resource type="Script" uid="uid://cobp4qehnuq77" path="res://addons/health_hitbox_hurtbox/resources/health_modifier.gd" id="11_hoyxj"]
 [ext_resource type="Script" uid="uid://dr8bvnfebp76" path="res://addons/health_hitbox_hurtbox/health/health.gd" id="11_nc3gv"]
+[ext_resource type="AudioStream" uid="uid://dakuw8dqmclfe" path="res://Dodge.wav" id="19_kgbx4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jkfty"]
 size = Vector2(104, 486.76776)
@@ -270,7 +269,7 @@ stream = ExtResource("4_5lgxq")
 stream = ExtResource("7_p04tm")
 
 [node name="Jump" type="AudioStreamPlayer2D" parent="." unique_id=360486994]
-stream = ExtResource("5_5lgxq")
+stream = ExtResource("2_mnpen")
 
 [node name="ImpactSlam" type="AudioStreamPlayer2D" parent="." unique_id=568828070]
 stream = ExtResource("6_ew46a")
@@ -308,7 +307,7 @@ revivable = false
 metadata/_custom_type_script = "uid://dr8bvnfebp76"
 
 [node name="dash" type="AudioStreamPlayer2D" parent="." unique_id=1108941584]
-stream = ExtResource("4_ew46a")
+stream = ExtResource("19_kgbx4")
 
 [node name="dash reset" type="Timer" parent="." unique_id=1641397825]
 

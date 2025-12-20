@@ -46,7 +46,7 @@ text = "the end
 thanks for playing this stupid game"
 
 [node name="Node2D2" parent="." unique_id=1033239903 instance=ExtResource("6_iw27f")]
-position = Vector2(3614, 3302)
+position = Vector2(21606, 3355)
 scale = Vector2(21.345, 21.345)
 
 [node name="Node2D3" parent="." unique_id=769600999 instance=ExtResource("4_p5pve")]
