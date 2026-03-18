@@ -1,0 +1,152 @@
+[gd_scene load_steps=8 format=3 uid="uid://bbsb0x2h18dyi"]
+
+[ext_resource type="Texture2D" uid="uid://c13eyo7u3qrci" path="res://Sprite-0009.png" id="4_wujgv"]
+
+[sub_resource type="GDScript" id="GDScript_7k104"]
+script/source = "class_name Health extends Node
+## Simple health system with damage, healing, and invincibility frames.
+
+## Affect types for compatibility with existing addon systems.
+enum Affect { NONE, DAMAGE, HEAL }
+
+
+func _ready() -> void:
+	pass
+"
+
+[sub_resource type="GDScript" id="GDScript_4gyqm"]
+script/source = "@tool
+class_name BasicHurtBox2D extends HurtBox2D
+## [BasicHurtBox2D] enables collision detection by [HitBox2D] or [HitScan2D] and applies affects to [Health].
+
+## The multiplier to apply to all damage actions.
+@export var damage_multiplier: float = 1.0:
+	set(mult):
+		damage_multiplier = mult
+		if modifiers.has(HealthActionType.Enum.KINETIC):
+			modifiers[HealthActionType.Enum.KINETIC].multiplier = mult
+
+## The multiplier to apply to all heal actions.
+@export var heal_multiplier: float = 1.0:
+	set(mult):
+		heal_multiplier = mult
+		if modifiers.has(HealthActionType.Enum.MEDICINE):
+			modifiers[HealthActionType.Enum.MEDICINE].multiplier = mult
+
+@export_group(\"Advanced\")
+
+## Applies healing to [Health] when [color=orange]damage()[/color] is called.
+@export var heal_on_damage: bool = false:
+	set(enable):
+		heal_on_damage = enable
+		if modifiers.has(HealthActionType.Enum.KINETIC):
+			modifiers[HealthActionType.Enum.KINETIC].convert_affect = _affect_heal_on_damage(enable)
+
+
+## Applies damage to [Health] when [color=orange]heal()[/color] is called.
+@export var damage_on_heal: bool = false:
+	set(enable):
+		damage_on_heal = enable
+		if modifiers.has(HealthActionType.Enum.MEDICINE):
+			modifiers[HealthActionType.Enum.MEDICINE].convert_affect = _affect_damage_on_heal(enable)
+
+
+
+func _ready() -> void:
+	modifiers[HealthActionType.Enum.KINETIC] = HealthModifier.new(0, damage_multiplier, _affect_heal_on_damage(heal_on_damage))
+	modifiers[HealthActionType.Enum.MEDICINE] = HealthModifier.new(0, heal_multiplier, _affect_damage_on_heal(damage_on_heal))
+
+
+func _affect_heal_on_damage(enabled: bool) -> Health.Affect:
+	return Health.Affect.HEAL if enabled else Health.Affect.NONE
+
+
+func _affect_damage_on_heal(enabled: bool) -> Health.Affect:
+	return Health.Affect.DAMAGE if enabled else Health.Affect.NONE
+"
+
+[sub_resource type="GDScript" id="GDScript_qi2p4"]
+script/source = "class_name HealthModifier extends Resource
+
+@export var incrementer: int = 0
+@export var multiplier: float = 1.0
+
+@export var convert_affect: Health.Affect = Health.Affect.NONE
+@export var convert_type: HealthActionType.Enum = HealthActionType.Enum.NONE
+
+
+func _init(
+	p_incrementer: int = 0,
+	p_multiplier: float = 1.0,
+	p_convert_affect: Health.Affect = Health.Affect.NONE,
+	p_convert_type: HealthActionType.Enum = HealthActionType.Enum.NONE
+) -> void:
+	incrementer = p_incrementer
+	multiplier = p_multiplier
+	convert_affect = p_convert_affect
+	convert_type = p_convert_type
+
+
+
+## clone because duplicate() doesn't work with _init() parameters
+func clone() -> HealthModifier:
+	return HealthModifier.new(incrementer, multiplier, convert_affect, convert_type)
+
+
+func _to_string() -> String:
+	return \"HealthModifier<incrementer=%d multiplier=%0.4f convert_affect=%s conver_type=%s>\"\\
+		% [incrementer, multiplier, Health.Affect.find_key(convert_affect), HealthActionType.Enum.find_key(convert_type)]
+"
+
+[sub_resource type="Resource" id="Resource_iifgy"]
+script = SubResource("GDScript_qi2p4")
+incrementer = 0
+multiplier = 1.0
+convert_affect = 0
+convert_type = 0
+
+[sub_resource type="Resource" id="Resource_epg4t"]
+script = SubResource("GDScript_qi2p4")
+incrementer = 0
+multiplier = 1.0
+convert_affect = 0
+convert_type = 0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iifgy"]
+size = Vector2(38.5, 58.4859)
+
+[node name="Node2D" type="Area2D"]
+
+[node name="Health" type="Node" parent="."]
+script = SubResource("GDScript_7k104")
+metadata/_custom_type_script = "uid://dr8bvnfebp76"
+
+[node name="BasicHurtBox2D" type="Area2D" parent="." node_paths=PackedStringArray("health")]
+position = Vector2(17, 14)
+scale = Vector2(3, 3)
+collision_layer = 16
+collision_mask = 32
+script = SubResource("GDScript_4gyqm")
+health = NodePath("../Health")
+modifiers = Dictionary[int, SubResource("GDScript_qi2p4")]({
+1: SubResource("Resource_iifgy"),
+2: SubResource("Resource_epg4t")
+})
+metadata/_custom_type_script = "uid://dtfoilkdcfvgv"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BasicHurtBox2D"]
+position = Vector2(-1.91667, -6.58333)
+shape = SubResource("RectangleShape2D_iifgy")
+
+[node name="Icon" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(17, 14)
+scale = Vector2(3, 3)
+texture = ExtResource("4_wujgv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(11, -9.6348)
+scale = Vector2(2.86, 2.86)
+shape = SubResource("RectangleShape2D_iifgy")
+
+[node name="Timer" type="Timer" parent="."]

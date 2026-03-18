@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://ciyx2mbyhbsxs"]
+
+[ext_resource type="Texture2D" uid="uid://b0g6qyxuha5f3" path="res://heart.png" id="1_cixvg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7p8dj"]
+atlas = ExtResource("1_cixvg")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pembh"]
+atlas = ExtResource("1_cixvg")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bjxl8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7p8dj")
+}],
+"loop": true,
+"name": &"empty",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pembh")
+}],
+"loop": true,
+"name": &"full",
+"speed": 5.0
+}]
+
+[node name="Node2D" type="Node2D" unique_id=1226644783]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1824667490]
+texture_filter = 1
+scale = Vector2(10, 10)
+sprite_frames = SubResource("SpriteFrames_bjxl8")
+animation = &"full"

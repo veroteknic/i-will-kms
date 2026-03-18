@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://b6up1oc2n0ytm"]
+
+[ext_resource type="Texture2D" uid="uid://d27xkymdn8jcn" path="res://the lava.png" id="1_owqt4"]
+[ext_resource type="Script" uid="uid://s2uirddsccaw" path="res://hitbox.gd" id="2_nurxf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nurxf"]
+size = Vector2(2747, 25)
+
+[node name="Node2D" type="Area2D" unique_id=2028740721]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1300133606]
+position = Vector2(-315, 1023.5)
+scale = Vector2(101.875, 64.96875)
+texture = ExtResource("1_owqt4")
+
+[node name="HitBox" type="Area2D" parent="." unique_id=2057510971]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("2_nurxf")
+damage = 999
+metadata/_custom_type_script = "uid://s2uirddsccaw"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" unique_id=302396767]
+position = Vector2(-274.5, 2.5)
+shape = SubResource("RectangleShape2D_nurxf")

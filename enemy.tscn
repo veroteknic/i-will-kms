@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://bbsb0x2h18dyi"]
+
+[ext_resource type="Script" uid="uid://c6ouo453pq4b1" path="res://Health.gd" id="1_iifgy"]
+[ext_resource type="Script" uid="uid://ypgfelo0448h" path="res://enemy.gd" id="1_wujgv"]
+[ext_resource type="Script" uid="uid://s2uirddsccaw" path="res://hitbox.gd" id="4_epg4t"]
+[ext_resource type="Texture2D" uid="uid://c13eyo7u3qrci" path="res://Sprite-0009.png" id="4_wujgv"]
+[ext_resource type="Script" uid="uid://c6yi6mr6ky2ha" path="res://hurtbox.gd" id="5_3yqyl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iifgy"]
+size = Vector2(32.121147, 59.79021)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_epg4t"]
+size = Vector2(74.12587, 75.87413)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hb8ge"]
+size = Vector2(16.878613, 37.687862)
+
+[node name="Node2D" type="CharacterBody2D" unique_id=1157964288]
+script = ExtResource("1_wujgv")
+
+[node name="Health" type="Node" parent="." unique_id=905444232]
+script = ExtResource("1_iifgy")
+
+[node name="right wall" type="RayCast2D" parent="." unique_id=871723837]
+target_position = Vector2(93, 1)
+
+[node name="Icon" type="Sprite2D" parent="." unique_id=1619017865]
+texture_filter = 1
+position = Vector2(17, 14)
+scale = Vector2(3, 3)
+texture = ExtResource("4_wujgv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=864655323]
+position = Vector2(-1, -2)
+scale = Vector2(2.86, 2.86)
+shape = SubResource("RectangleShape2D_iifgy")
+
+[node name="HitBox" type="Area2D" parent="." unique_id=718370128]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("4_epg4t")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="HitBox" unique_id=378711413]
+position = Vector2(-3.000002, 0.49999905)
+scale = Vector2(2.86, 2.86)
+shape = SubResource("RectangleShape2D_epg4t")
+
+[node name="left" type="RayCast2D" parent="." unique_id=2005793785]
+target_position = Vector2(-35, 112)
+
+[node name="right" type="RayCast2D" parent="." unique_id=35097543]
+target_position = Vector2(59, 107)
+
+[node name="left wall" type="RayCast2D" parent="." unique_id=135647443]
+target_position = Vector2(-108, -1)
+
+[node name="HurtBox" type="Area2D" parent="." unique_id=275668004 node_paths=PackedStringArray("health")]
+script = ExtResource("5_3yqyl")
+health = NodePath("../Health")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="HurtBox" unique_id=1740647764]
+position = Vector2(2, -4)
+scale = Vector2(4.325, 4.325)
+shape = SubResource("RectangleShape2D_hb8ge")
+
+[connection signal="received_damage" from="HurtBox" to="." method="_on_hurt_box_received_damage"]

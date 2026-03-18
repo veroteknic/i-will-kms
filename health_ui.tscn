@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://healthui123"]
+
+[ext_resource type="Script" uid="uid://vbghofndyik2" path="res://health_ui.gd" id="1_healthui"]
+[ext_resource type="PackedScene" uid="uid://ciyx2mbyhbsxs" path="res://heart.tscn" id="2_heart"]
+
+[node name="HealthUI" type="CanvasLayer" unique_id=464517598]
+script = ExtResource("1_healthui")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=186121433]
+offset_left = 20.0
+offset_top = 920.0
+offset_right = 180.0
+offset_bottom = 1000.0
+theme_override_constants/separation = 10
+
+[node name="Heart1" parent="HBoxContainer" unique_id=1327024651 instance=ExtResource("2_heart")]
+position = Vector2(54, -323)
+
+[node name="Heart2" parent="HBoxContainer" unique_id=608267244 instance=ExtResource("2_heart")]
+position = Vector2(155, -323)
+
+[node name="Heart3" parent="HBoxContainer" unique_id=1906498536 instance=ExtResource("2_heart")]
+position = Vector2(256, -323)

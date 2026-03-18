@@ -1,0 +1,250 @@
+[gd_scene load_steps=22 format=3 uid="uid://caqverujckupq"]
+
+[ext_resource type="Script" uid="uid://cuxtvp3i27ipj" path="res://player_character.gd" id="1_x1w70"]
+[ext_resource type="Texture2D" uid="uid://bsy52jy7iqfyo" path="res://dash.png" id="2_hoyxj"]
+[ext_resource type="AudioStream" uid="uid://bmxnl4ebjejdy" path="res://Landing.wav" id="4_5lgxq"]
+[ext_resource type="AudioStream" uid="uid://66fqg6pw7ifu" path="res://Dodge3.wav" id="4_ew46a"]
+[ext_resource type="AudioStream" uid="uid://kvvpibdce8kx" path="res://Bluezone-Autobots-footstep-013.wav" id="5_5lgxq"]
+[ext_resource type="AudioStream" uid="uid://dvmonkamlv03x" path="res://Whoosh.wav" id="5_ew46a"]
+[ext_resource type="AudioStream" uid="uid://vlkjextq2p4x" path="res://LandingHeavy.wav" id="6_ew46a"]
+[ext_resource type="AudioStream" uid="uid://dsdv70arcc075" path="res://wallcling.wav" id="7_p04tm"]
+[ext_resource type="Texture2D" uid="uid://huxyxj1cjnk7" path="res://Sprite-0003.png" id="8_hpmvu"]
+[ext_resource type="PackedScene" uid="uid://bx4fcg6cwjsqh" path="res://gun.tscn" id="9_hpmvu"]
+[ext_resource type="Script" uid="uid://dtfoilkdcfvgv" path="res://addons/health_hitbox_hurtbox/2d/hurt_box_2d/basic_hurt_box_2d.gd" id="10_nc3gv"]
+[ext_resource type="Script" uid="uid://cobp4qehnuq77" path="res://addons/health_hitbox_hurtbox/resources/health_modifier.gd" id="11_hoyxj"]
+[ext_resource type="Script" uid="uid://dr8bvnfebp76" path="res://addons/health_hitbox_hurtbox/health/health.gd" id="11_nc3gv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jkfty"]
+size = Vector2(104, 457)
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_x1w70"]
+streams_count = 1
+stream_0/stream = ExtResource("4_ew46a")
+
+[sub_resource type="Animation" id="Animation_hpmvu"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:flip_h")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Node2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(37.7953, -114.961)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../Node2D:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(6.915, 6.915)]
+}
+
+[sub_resource type="Animation" id="Animation_d1yp6"]
+resource_name = "gun left"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:flip_h")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Node2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-38.075, -114.961)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = false
+tracks/2/path = NodePath("../Node2D:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-6.915, 6.915)]
+}
+
+[sub_resource type="Animation" id="Animation_x1w70"]
+resource_name = "gun right"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:flip_h")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Node2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(37.7953, -114.961)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = false
+tracks/2/path = NodePath("../Node2D:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(6.915, 6.915)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hpmvu"]
+_data = {
+&"RESET": SubResource("Animation_hpmvu"),
+&"gun left": SubResource("Animation_d1yp6"),
+&"gun right": SubResource("Animation_x1w70")
+}
+
+[sub_resource type="Resource" id="Resource_nc3gv"]
+script = ExtResource("11_hoyxj")
+incrementer = 0
+multiplier = 1.0
+convert_affect = 0
+convert_type = 0
+
+[sub_resource type="Resource" id="Resource_hoyxj"]
+script = ExtResource("11_hoyxj")
+incrementer = 0
+multiplier = 1.0
+convert_affect = 0
+convert_type = 0
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+scale = Vector2(0.635, 0.635)
+script = ExtResource("1_x1w70")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(-36.5512, 7.28349)
+scale = Vector2(11.0927, 11.5039)
+texture = ExtResource("2_hoyxj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_jkfty")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+scale = Vector2(3, 3)
+zoom = Vector2(0.73, 0.73)
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+drag_left_margin = 0.3
+drag_top_margin = 0.8
+drag_right_margin = 0.3
+drag_bottom_margin = 0.3
+
+[node name="dash_timer" type="Timer" parent="."]
+wait_time = 0.7
+one_shot = true
+
+[node name="dash_cooldown" type="Timer" parent="."]
+wait_time = 1.3
+
+[node name="DashSound" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_x1w70")
+
+[node name="landing" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_5lgxq")
+
+[node name="falling" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_ew46a")
+
+[node name="Jump" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_5lgxq")
+
+[node name="ImpactSlam" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_ew46a")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_p04tm")
+
+[node name="Sprite-0002" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(8.985, 8.985)
+texture = ExtResource("8_hpmvu")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Sprite-0002")
+libraries = {
+&"": SubResource("AnimationLibrary_hpmvu")
+}
+
+[node name="Node2D" parent="." instance=ExtResource("9_hpmvu")]
+position = Vector2(37.7953, -114.961)
+scale = Vector2(6.915, 6.915)
+
+[node name="HurtBox2D" type="Area2D" parent="." node_paths=PackedStringArray("health")]
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("10_nc3gv")
+health = NodePath("Health")
+modifiers = Dictionary[int, ExtResource("11_hoyxj")]({
+1: SubResource("Resource_nc3gv"),
+2: SubResource("Resource_hoyxj")
+})
+metadata/_custom_type_script = "uid://dtfoilkdcfvgv"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox2D"]
+scale = Vector2(1.5748, 1.5748)
+shape = SubResource("RectangleShape2D_jkfty")
+
+[node name="Health" type="Node" parent="HurtBox2D"]
+script = ExtResource("11_nc3gv")
+current = 3
+max = 3
+revivable = false
+metadata/_custom_type_script = "uid://dr8bvnfebp76"
+
+[connection signal="timeout" from="dash_timer" to="." method="_on_dash_timer_timeout"]
+[connection signal="timeout" from="dash_cooldown" to="." method="_on_dash_cooldown_timeout"]
