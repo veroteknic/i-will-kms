@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dlfm4ayhdpo6y"
+path="res://.godot/imported/TF2 Deathcam Sound Effect.mp3-138f1ce7c5a3cf23fef25f07f2dd1629.mp3str"
+
+[deps]
+
+source_file="res://TF2 Deathcam Sound Effect.mp3"
+dest_files=["res://.godot/imported/TF2 Deathcam Sound Effect.mp3-138f1ce7c5a3cf23fef25f07f2dd1629.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://caqverujckupq"]
 
 [ext_resource type="Script" uid="uid://cuxtvp3i27ipj" path="res://player_character.gd" id="1_x1w70"]
+[ext_resource type="AudioStream" uid="uid://dvmonkamlv03x" path="res://Whoosh.wav" id="2_ax6ge"]
 [ext_resource type="Texture2D" uid="uid://bsy52jy7iqfyo" path="res://dash.png" id="2_hoyxj"]
 [ext_resource type="AudioStream" uid="uid://egte2slyrup5" path="res://fs_tile_01.wav" id="2_mnpen"]
 [ext_resource type="AudioStream" uid="uid://6r7jmji6jx7q" path="res://fs_tile_02.wav" id="3_dgskf"]
@@ -15,10 +16,20 @@
 [ext_resource type="PackedScene" uid="uid://bx4fcg6cwjsqh" path="res://gun.tscn" id="9_hpmvu"]
 [ext_resource type="AudioStream" uid="uid://bxkf4gld1a6a4" path="res://fs_tile_08.wav" id="9_vsoor"]
 [ext_resource type="AudioStream" uid="uid://bqtda3xaa82rm" path="res://fs_tile_09.wav" id="10_cqg6q"]
-[ext_resource type="Script" uid="uid://dtfoilkdcfvgv" path="res://addons/health_hitbox_hurtbox/2d/hurt_box_2d/basic_hurt_box_2d.gd" id="10_nc3gv"]
-[ext_resource type="Script" uid="uid://cobp4qehnuq77" path="res://addons/health_hitbox_hurtbox/resources/health_modifier.gd" id="11_hoyxj"]
-[ext_resource type="Script" uid="uid://dr8bvnfebp76" path="res://addons/health_hitbox_hurtbox/health/health.gd" id="11_nc3gv"]
+[ext_resource type="Script" uid="uid://c6ouo453pq4b1" path="res://Health.gd" id="17_mwone"]
+[ext_resource type="Script" uid="uid://c6yi6mr6ky2ha" path="res://hurtbox.gd" id="18_fnwig"]
+[ext_resource type="Script" uid="uid://s2uirddsccaw" path="res://hitbox.gd" id="18_hitbox"]
 [ext_resource type="AudioStream" uid="uid://dakuw8dqmclfe" path="res://Dodge.wav" id="19_kgbx4"]
+[ext_resource type="AudioStream" uid="uid://k5mbtyas5j25" path="res://emoji-scream.mp3" id="20_6lfid"]
+[ext_resource type="PackedScene" uid="uid://healthui123" path="res://health_ui.tscn" id="20_healthui"]
+[ext_resource type="AudioStream" uid="uid://c1mgivd1tk3cr" path="res://goofy-yell_LvAybRd.mp3" id="21_mq1nk"]
+[ext_resource type="AudioStream" uid="uid://cfc65ksts1boy" path="res://hl1scream.mp3" id="22_vsoor"]
+[ext_resource type="AudioStream" uid="uid://dnbbt2diy2o2d" path="res://screaming-soldier-tf2.mp3" id="23_cqg6q"]
+[ext_resource type="AudioStream" uid="uid://r8m0fu6r5pu3" path="res://tom_scream_ow.mp3" id="24_emc7f"]
+[ext_resource type="AudioStream" uid="uid://ci4doqjbhb2yl" path="res://tf2-spy-death-scream.mp3" id="26_vsoor"]
+[ext_resource type="PackedScene" uid="uid://cniyn3h4n5skm" path="res://hurt_screen.tscn" id="27_hurt"]
+[ext_resource type="AudioStream" uid="uid://dlfm4ayhdpo6y" path="res://TF2 Deathcam Sound Effect.mp3" id="28_emc7f"]
+[ext_resource type="AudioStream" uid="uid://ckw6cf574omqy" path="res://hitHurt.wav" id="29_jm4la"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jkfty"]
 size = Vector2(104, 486.76776)
@@ -90,7 +101,7 @@ tracks/0/keys = {
 }
 tracks/1/type = "value"
 tracks/1/imported = false
-tracks/1/enabled = false
+tracks/1/enabled = true
 tracks/1/path = NodePath("Node2D:scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
@@ -129,7 +140,7 @@ tracks/0/keys = {
 }
 tracks/1/type = "value"
 tracks/1/imported = false
-tracks/1/enabled = false
+tracks/1/enabled = true
 tracks/1/path = NodePath("Node2D:scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
@@ -158,12 +169,6 @@ _data = {
 &"gun left": SubResource("Animation_nc3gv"),
 &"gun right": SubResource("Animation_x1w70")
 }
-
-[sub_resource type="Resource" id="Resource_kgbx4"]
-script = ExtResource("11_hoyxj")
-
-[sub_resource type="Resource" id="Resource_6iixl"]
-script = ExtResource("11_hoyxj")
 
 [sub_resource type="PortableCompressedTexture2D" id="PortableCompressedTexture2D_30dpb"]
 _data = PackedByteArray("AAADAAUAAAABAAAANgAAAIAAAADaAwAAUklGRtIDAABXRUJQVlA4TMUDAAAvNcAfEL+goI0kZf07vWfGEcKmkSTH0crO+/sH8emrDYC04f9XTR0Bi4CgyP/RogqCi+xrGEPB+EaVBIfvR2qv2n7pLCOUs+VsIba7ZD30WrL/Egxatm3HbSO5v9cGGURU3sP8h8rX4BFpq74i+u/AkaQ2ai7HAuNPjP8fBsBzAIslAHEOpi2RgIT7atYVSd7H7XZ7S7sgmfT2dI60C5JfIPDj5fmV79mar5AABN0PLpbQHAZZKQFAdVug5xKR0dmTV1mSiIr80OOChGhbSSJ6Drki2UUrkiHyeBx1iS2USkUCN7NRl7D1oxck4XwA6hKAFQnoTj5WJShL2FoD6hIHKUnQ7ZhcktjvViT3a5LGT6Im2VXkgoT6rSr5OvSaRKsSbv2S5HtZYghckPS6BGdcLSGMANQlW1kithlziTu68Dh+sa2TGCMEcKGERBK4UAKM9ZIHyBBIYomEqp0IuQO0SvJoP0XSNuIMSyVm8PjFEiINayQJ37LbVZJkjRZL3Akcw0rJpp2wfXZGrJN0a8TGQsn+UyR6J36KpIf9slqy/xzJJ+EDl0pABxnjp0qwTNJ6TwKBNRLiUAnZIFdJJIk0yyrJPfPTxiIJeZaPNRJg66sk/3uN/BwClkv86bpcQsJNYr3k43a7vf0EydvTOX4TCfjx8vzK99USgrBnayWgOYy2UgKwq8jo7JkEcwkYJBlNREV+6JHMB5hI7PucSWy2IqKqElYulSS2toloLtlNIMfjSNpFvCS16RB5RIktlAJuHiOmKrkEKEjY+hHOB2Q3UVKxhcxAd/IxezlKqja42FoDspymAXWbh6DbMckyjC1yxZZk071PAuk4qNsaP20Gu4qk4UxB1G3Ub9bXoa7pJbUNs2Wpxa378pfcVxFsI7fxuwsnB5Mb/4BksI3cxu5zByorPKavW8GWZFc3sTSTAWlgauNmuWMJEyX5n/ZtvmizI8JmGWNS9gfO5nI20D9zkahFKxESpgvfcwGjfJNPDEx7gMzziEojAs6h2olCDplvteyZw+ijVSPy/WYxq23OgDxMs42cFlm5zs1m2mbLl0WkhTsfkdbT4r1lt0l2PRV5e/LzyTouSO82J19c3eEcsTiPPHvuRK5Nu2P5lQo5xKnL250j1B0+lH2y0Ccxaa9lb00KKPfIr271BuNSPTCyALLQF7e8fZ5x5hFdDx9Jt7qJMXGXEpXZOs0IqHa/FGzuVhMCaeSk1nuSuxA4o4oBRnEQh0rIK89M3lXcZMtJzOHym+leqa6uEWk3fqh9rx559kcbAwA=")
@@ -243,9 +248,34 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="CharacterBody2D" type="CharacterBody2D" unique_id=182168056]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mq1nk"]
+size = Vector2(108.66143, 22.047234)
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_jm4la"]
+streams_count = 6
+stream_0/stream = ExtResource("20_6lfid")
+stream_1/stream = ExtResource("21_mq1nk")
+stream_2/stream = ExtResource("22_vsoor")
+stream_3/stream = ExtResource("23_cqg6q")
+stream_4/stream = ExtResource("24_emc7f")
+stream_5/stream = ExtResource("26_vsoor")
+
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=182168056 groups=["player"]]
 scale = Vector2(0.635, 0.635)
+collision_layer = 2
+collision_mask = 2
 script = ExtResource("1_x1w70")
+death_killcam_zoom_mult = 4.0
+death_killcam_in_time = 0.1
+death_killcam_offset_strength = 1.0
+fall_whoosh_stream = ExtResource("2_ax6ge")
+landing_light_stream = ExtResource("4_5lgxq")
+landing_heavy_stream = ExtResource("6_ew46a")
+landing_heavy_speed = 870.0
+screenshake_max_offset = 70.0
+screenshake_shoot_amount = 0.17
+screenshake_hurt_amount = 0.46
+screenshake_slam_amount = 0.72
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=447747020]
 position = Vector2(0, 14.883881)
@@ -284,28 +314,6 @@ libraries/ = SubResource("AnimationLibrary_hpmvu")
 position = Vector2(37.7953, -114.961)
 scale = Vector2(6.915, 6.915)
 
-[node name="HurtBox2D" type="Area2D" parent="." unique_id=761094899 node_paths=PackedStringArray("health")]
-collision_layer = 4
-collision_mask = 4
-script = ExtResource("10_nc3gv")
-health = NodePath("Health")
-modifiers = Dictionary[int, ExtResource("11_hoyxj")]({
-1: SubResource("Resource_kgbx4"),
-2: SubResource("Resource_6iixl")
-})
-metadata/_custom_type_script = "uid://dtfoilkdcfvgv"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox2D" unique_id=162989863]
-scale = Vector2(1.5748, 1.5748)
-shape = SubResource("RectangleShape2D_jkfty")
-
-[node name="Health" type="Node" parent="HurtBox2D" unique_id=966444880]
-script = ExtResource("11_nc3gv")
-current = 3
-max = 3
-revivable = false
-metadata/_custom_type_script = "uid://dr8bvnfebp76"
-
 [node name="dash" type="AudioStreamPlayer2D" parent="." unique_id=1108941584]
 stream = ExtResource("19_kgbx4")
 
@@ -317,7 +325,6 @@ position = Vector2(-69.291336, -45.669292)
 scale = Vector2(10, 10)
 sprite_frames = SubResource("SpriteFrames_vsoor")
 animation = &"walking"
-frame_progress = 0.2788877
 offset = Vector2(7.244094, 1.2598426)
 metadata/_aseprite_wizard_interface_config_ = {
 "pending_changes": {}
@@ -341,6 +348,100 @@ metadata/_aseprite_wizard_source_file_hash_ = "32ac476710fa661017957f26ab6583d6"
 zoom = Vector2(0.37, 0.37)
 position_smoothing_enabled = true
 position_smoothing_speed = 2.19
+
+[node name="Health" type="Node" parent="." unique_id=1954260058]
+script = ExtResource("17_mwone")
+
+[node name="HurtBox" type="Area2D" parent="." unique_id=590572929 node_paths=PackedStringArray("health")]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("18_fnwig")
+health = NodePath("../Health")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" unique_id=597578353]
+position = Vector2(0, 14.883881)
+scale = Vector2(0.9999999, 0.9999999)
+shape = SubResource("RectangleShape2D_jkfty")
+
+[node name="HealthUI" parent="." unique_id=969155413 instance=ExtResource("20_healthui")]
+
+[node name="HurtScreen" parent="." unique_id=1891432844 instance=ExtResource("27_hurt")]
+
+[node name="SlamHitBox" type="Area2D" parent="." unique_id=274552533]
+monitoring = false
+script = ExtResource("18_hitbox")
+damage = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SlamHitBox" unique_id=1162575826]
+position = Vector2(-4.724409, 281.88977)
+scale = Vector2(0.9999999, 0.9999999)
+shape = SubResource("RectangleShape2D_mq1nk")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="." unique_id=1170351893]
+position = Vector2(-3.1495361, -37.795258)
+scale = Vector2(10, 10)
+emitting = false
+amount = 12
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+emission_shape = 1
+emission_sphere_radius = 42.26
+spread = 180.0
+gravity = Vector2(0, 800)
+initial_velocity_min = 100.0
+initial_velocity_max = 200.0
+radial_accel_min = -100.0
+radial_accel_max = 40.79
+damping_max = 32.895
+angle_max = 274.7
+scale_amount_min = 10.0
+scale_amount_max = 20.0
+color = Color(1, 0.011764706, 0, 1)
+
+[node name="death" type="AudioStreamPlayer2D" parent="." unique_id=924306367]
+position = Vector2(0, 6.2992125)
+stream = SubResource("AudioStreamRandomizer_jm4la")
+
+[node name="hampter" type="AudioStreamPlayer2D" parent="." unique_id=1037895321]
+stream = ExtResource("28_emc7f")
+
+[node name="RespawnUI" type="CanvasLayer" parent="." unique_id=1581681199]
+layer = 10
+
+[node name="RespawnLabel" type="Label" parent="RespawnUI" unique_id=564924121]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -260.0
+offset_top = 14.0
+offset_right = 260.0
+offset_bottom = 64.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 36
+text = "Respawn in 3"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DebugUI" type="CanvasLayer" parent="." unique_id=905771466]
+layer = 11
+
+[node name="DebugLabel" type="Label" parent="DebugUI" unique_id=435029115]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -345.0
+offset_top = 10.0
+offset_right = -12.0
+offset_bottom = 170.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 18
+text = "DEBUG"
+horizontal_alignment = 2
+
+[node name="hurt" type="AudioStreamPlayer2D" parent="." unique_id=1483986949]
+stream = ExtResource("29_jm4la")
 
 [connection signal="timeout" from="dash_timer" to="." method="_on_dash_timer_timeout"]
 [connection signal="timeout" from="dash_cooldown" to="." method="_on_dash_cooldown_timeout"]

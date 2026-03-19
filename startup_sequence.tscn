@@ -35,9 +35,9 @@ offset_right = 564.0
 offset_bottom = 592.0
 theme = SubResource("Theme_spsd3")
 theme_override_colors/default_color = Color(0.98039216, 0, 0, 1)
-text = "MANKIND IS DEAD
-YOU REMAIN
-SAVE US ALL"
+text = "MANKIND IS ALIVE
+HELL IS EMPTY
+BLOOD ISN'T FUEL"
 script = ExtResource("1_spsd3")
 typing_speed = 25.0
 typing_sound_player = NodePath("../AudioStreamPlayer2D")

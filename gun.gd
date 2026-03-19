@@ -4,15 +4,22 @@ const GRENADE = preload("res://grenade.tscn")
 const LOOK_DEAD_ZONE = 30.0  # Minimum distance to look at target
 const GRENADE_THROW_FORCE = 600.0
 const GRENADE_COOLDOWN = 1.5
+const GRENADE_VELOCITY_INHERIT = 0.6
+const AIM_FLIP_DEADZONE = 8.0
+const ARM_POS_RIGHT = Vector2(37.7953, -114.961)
+const ARM_POS_LEFT = Vector2(-47.63, -114.961)
 @onready var muzzle: Marker2D = $Marker2D
 @onready var timer: Timer = $Timer
-
-@onready var animation_player: AnimationPlayer = $"../AnimationPlayer"
+@onready var gun_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var player_sprite: AnimatedSprite2D = get_parent().get_node("AnimatedSprite2D")
 var flipped = false
+var facing_left = false
 var grenade_cooldown_timer = 0.0
 
 func _ready() -> void:
-	$"Sprite-0001".hide()
+	if gun_sprite:
+		gun_sprite.play("idle")
+		gun_sprite.animation_finished.connect(_on_animation_finished)
 
 func _process(_delta: float) -> void:
 	# Update grenade cooldown
@@ -21,35 +28,43 @@ func _process(_delta: float) -> void:
 	var mouse = get_global_mouse_position()
 	var distance_to_mouse = global_position.distance_to(mouse)
 	
-	# Only look at mouse if it's far enough away to avoid spazzing
 	if distance_to_mouse > LOOK_DEAD_ZONE:
 		look_at(mouse)
 
 	# Normalize angle to 0-360
-	rotation_degrees = fposmod(rotation_degrees, 360)
+	if rotation_degrees > 360:
+		rotation_degrees -= 360
+	if rotation_degrees < 0:
+		rotation_degrees += 360
 	var deg = rotation_degrees
 	
-	# Determine flipped state: flip when pointing left (120-240 degrees)
-	# This avoids the 90/270 degree zones to prevent spazzing
-	var should_flip = (deg > 120 and deg < 239)
-	
+
+	var x_delta: float = mouse.x - global_position.x
+	var should_flip = facing_left
+	if x_delta > AIM_FLIP_DEADZONE:
+		should_flip = false
+	elif x_delta < -AIM_FLIP_DEADZONE:
+		should_flip = true
+	facing_left = should_flip
+
 	if should_flip != flipped:
 		flipped = should_flip
 
-	# Apply scale and animation based on flipped
+	# Apply flip to player sprite and arm position only; let gun rotation handle pointing
+	if player_sprite:
+		player_sprite.flip_h = flipped
+	
 	if flipped:
-		$"../AnimatedSprite2D".flip_h = true
-		scale.y = -7
-		animation_player.play("gun left")
+		position = ARM_POS_LEFT
 	else:
-		$"../AnimatedSprite2D".flip_h = false
-		scale.y = 7
-		animation_player.play("gun right")
+		position = ARM_POS_RIGHT
 	
 	if Input.is_action_just_pressed("pewpew"):
 		$AudioStreamPlayer2D.play()
-		$"Sprite-0001".show()
-		$Timer.start()
+		if get_parent() and get_parent().has_method("add_screenshake"):
+			get_parent().add_screenshake(get_parent().screenshake_shoot_amount)
+		if gun_sprite:
+			gun_sprite.play("shoot")
 		var bullet_instance = BOOLET.instantiate()
 		get_tree().root.add_child(bullet_instance)
 		bullet_instance.global_position = muzzle.global_position
@@ -60,9 +75,14 @@ func _process(_delta: float) -> void:
 		get_tree().root.add_child(grenade_instance)
 		grenade_instance.global_position = muzzle.global_position
 		var throw_direction = Vector2(cos(rotation), sin(rotation))
-		grenade_instance.linear_velocity = throw_direction * GRENADE_THROW_FORCE
+		var inherited_velocity := Vector2.ZERO
+		var player_body := get_parent() as CharacterBody2D
+		if player_body:
+			inherited_velocity = player_body.velocity * GRENADE_VELOCITY_INHERIT
+		grenade_instance.linear_velocity = throw_direction * GRENADE_THROW_FORCE + inherited_velocity
 		grenade_cooldown_timer = GRENADE_COOLDOWN
 
 
-func _on_timer_timeout() -> void:
-	$"Sprite-0001".hide()
+func _on_animation_finished() -> void:
+	if gun_sprite and gun_sprite.animation == "shoot":
+		gun_sprite.play("idle")
