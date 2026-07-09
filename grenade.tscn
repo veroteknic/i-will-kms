@@ -24,6 +24,7 @@ size = Vector2(725, 620)
 [node name="Grenade" type="RigidBody2D" unique_id=1471454435]
 mass = 6.496
 script = ExtResource("1_hoyxj")
+grenade_jump_force = 5000.0
 metadata/_edit_lock_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=167337275]

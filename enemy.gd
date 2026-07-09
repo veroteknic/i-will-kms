@@ -1,10 +1,25 @@
 extends CharacterBody2D
+const ZOMBIE_HIT_SOUNDS: Array[AudioStream] = [
+	preload("res://Zombie Damage 1.wav"),
+	preload("res://Zombie Damage 2.wav"),
+	preload("res://Zombie Damage 3.wav")
+]
+const ZOMBIE_DEATH_SOUNDS: Array[AudioStream] = [
+	preload("res://Zombie Death.wav"),
+	preload("res://Zombie Weak Death.wav")
+]
+const ZOMBIE_SLAM_DEATH_SOUNDS: Array[AudioStream] = [
+	preload("res://Zombie Weak Death Reverse.wav"),
+	preload("res://Zombie Death.wav")
+]
+
 @onready var ray_cast_right: RayCast2D = $right
 @onready var ray_cast_left: RayCast2D = $left
 @onready var right_wall: RayCast2D = $"right wall"
 @onready var left_wall: RayCast2D = $"left wall"
-@onready var health_component: Health = $Health
+@onready var health_component: Node = $Health
 @onready var enemy_hurt_box: HurtBox = $HurtBox
+@onready var zombie_sfx_player: AudioStreamPlayer2D = get_node_or_null("ZombieSfx") as AudioStreamPlayer2D
 
 var direction = 1
 const SPEED = 300
@@ -19,6 +34,7 @@ var player: CharacterBody2D = null
 var raycast_to_player: RayCast2D
 var last_blood_spawn_ms: int = -1000
 var last_hit_was_slam: bool = false
+var _rng := RandomNumberGenerator.new()
 
 @export_group("Blood")
 @export var blood_enabled: bool = true
@@ -30,6 +46,8 @@ var last_hit_was_slam: bool = false
 
 
 func _ready() -> void:
+	_rng.randomize()
+	_ensure_zombie_sfx_player()
 	if health_component:
 		health_component.health_depleted.connect(_on_health_depleted)
 	if enemy_hurt_box:
@@ -163,6 +181,16 @@ func _on_hurt_box_received_damage(_damage: int) -> void:
 
 
 func _on_hurt_box_received_hit(source: Area2D) -> void:
+	var spray_direction := Vector2(float(direction), 0.0)
+	if source and is_instance_valid(source):
+		spray_direction = (global_position - source.global_position).normalized()
+	if spray_direction.length_squared() <= 0.0001:
+		spray_direction = Vector2(float(direction), 0.0)
+
+	var is_slam := source and is_instance_valid(source) and source.name == "SlamHitBox"
+	last_hit_was_slam = is_slam
+	_play_random_sound(ZOMBIE_HIT_SOUNDS, 0.98, 1.04)
+
 	if not blood_enabled:
 		return
 
@@ -172,25 +200,61 @@ func _on_hurt_box_received_hit(source: Area2D) -> void:
 		return
 	last_blood_spawn_ms = now_ms
 
-	var spray_direction := Vector2(float(direction), 0.0)
-	if source and is_instance_valid(source):
-		spray_direction = (global_position - source.global_position).normalized()
-	if spray_direction.length_squared() <= 0.0001:
-		spray_direction = Vector2(float(direction), 0.0)
-
-	var is_slam := source and is_instance_valid(source) and source.name == "SlamHitBox"
-	last_hit_was_slam = is_slam
 	_shake_player_cameras(0.45 if is_slam else 0.2)
 	_spawn_blood_spray(spray_direction, blood_slam_amount if is_slam else blood_hit_amount, 35.0 if is_slam else 25.0)
 
 
 func _on_health_depleted() -> void:
+	_play_world_death_sound(ZOMBIE_SLAM_DEATH_SOUNDS if last_hit_was_slam else ZOMBIE_DEATH_SOUNDS, 0.94, 1.03)
 	_shake_player_cameras(0.65 if last_hit_was_slam else 0.42)
 	if blood_enabled:
 		_spawn_blood_spray(Vector2(0, -1), blood_death_amount, 180.0)
 		if last_hit_was_slam:
 			_spawn_blood_spray(Vector2(0, -1), blood_slam_death_amount, 210.0)
 	queue_free()
+
+
+func _ensure_zombie_sfx_player() -> void:
+	if zombie_sfx_player and is_instance_valid(zombie_sfx_player):
+		return
+	zombie_sfx_player = AudioStreamPlayer2D.new()
+	zombie_sfx_player.name = "ZombieSfx"
+	zombie_sfx_player.max_distance = 100000.0
+	zombie_sfx_player.attenuation = 1.0
+	add_child(zombie_sfx_player)
+
+
+func _play_random_sound(pool: Array[AudioStream], min_pitch: float, max_pitch: float) -> void:
+	if pool.is_empty():
+		return
+	_ensure_zombie_sfx_player()
+	if not zombie_sfx_player or not is_instance_valid(zombie_sfx_player):
+		return
+	zombie_sfx_player.stream = pool[_rng.randi_range(0, pool.size() - 1)]
+	zombie_sfx_player.pitch_scale = _rng.randf_range(min_pitch, max_pitch)
+	zombie_sfx_player.play()
+
+
+func _play_world_death_sound(pool: Array[AudioStream], min_pitch: float, max_pitch: float) -> void:
+	if pool.is_empty():
+		return
+	var stream := pool[_rng.randi_range(0, pool.size() - 1)]
+	if not stream:
+		return
+	var world_player := AudioStreamPlayer2D.new()
+	world_player.stream = stream
+	world_player.pitch_scale = _rng.randf_range(min_pitch, max_pitch)
+	world_player.max_distance = 100000.0
+	world_player.attenuation = 1.0
+	world_player.top_level = true
+	world_player.global_position = global_position
+	var target_parent := get_tree().current_scene if get_tree().current_scene else get_tree().root
+	target_parent.add_child(world_player)
+	world_player.finished.connect(func() -> void:
+		if world_player and is_instance_valid(world_player):
+			world_player.queue_free()
+	)
+	world_player.play()
 
 
 func _shake_player_cameras(default_amount: float) -> void:

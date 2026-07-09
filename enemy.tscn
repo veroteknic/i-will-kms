@@ -57,6 +57,7 @@ target_position = Vector2(-108, -1)
 [node name="HurtBox" type="Area2D" parent="." unique_id=275668004 node_paths=PackedStringArray("health")]
 script = ExtResource("5_3yqyl")
 health = NodePath("../Health")
+post_hit_invincibility_time = 0.0
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="HurtBox" unique_id=1740647764]
 position = Vector2(2, -4)

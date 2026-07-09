@@ -6,7 +6,7 @@ signal received_damage(damage: int)
 signal received_hit(source: Area2D)
 
 
-@export var health: Health
+@export var health: Node
 @export var debug_logs: bool = true
 @export_range(0.05, 2.0, 0.01, "suffix:s") var contact_damage_interval: float = 0.4
 @export_range(0.0, 2.0, 0.01, "suffix:s") var post_hit_invincibility_time: float = 0.35
@@ -57,9 +57,9 @@ func _apply_hitbox_damage(area: Area2D) -> void:
 	if debug_logs:
 		print("[HurtBox] hit by HitBox. incoming_damage=", hitbox.damage)
 
-	var previous_health := health.health
+	var previous_health: int = int(health.health)
 	health.health -= hitbox.damage
-	var applied_damage := previous_health - health.health
+	var applied_damage: int = previous_health - int(health.health)
 	if applied_damage > 0:
 		if post_hit_invincibility_time > 0.0 and health.has_method("set_temporary_immortality"):
 			health.set_temporary_immortality(post_hit_invincibility_time)

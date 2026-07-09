@@ -51,37 +51,25 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Node2D:position")
+tracks/0/path = NodePath("Node2D:transform")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(37.7953, -114.961)]
+"values": [Transform2D(6.915, 0, 0, 6.915, 37.7953, -114.961)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Node2D:scale")
+tracks/1/path = NodePath("AnimatedSprite2D:flip_h")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(6.915, 6.915)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("AnimatedSprite2D:flip_h")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
 "values": [false]
 }
 
@@ -90,37 +78,25 @@ resource_name = "gun left"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Node2D:position")
+tracks/0/path = NodePath("Node2D:transform")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-47.63, -114.961)]
+"values": [Transform2D(-6.915, 0, 0, 6.915, -33.905, -114.961)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Node2D:scale")
+tracks/1/path = NodePath("AnimatedSprite2D:flip_h")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-6.915, 6.915)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("AnimatedSprite2D:flip_h")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(-0.033333335),
-"transitions": PackedFloat32Array(1),
-"update": 1,
 "values": [true]
 }
 
@@ -129,37 +105,25 @@ resource_name = "gun right"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Node2D:position")
+tracks/0/path = NodePath("Node2D:transform")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(37.7953, -114.961)]
+"values": [Transform2D(6.915, 0, 0, 6.915, 37.7953, -114.961)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Node2D:scale")
+tracks/1/path = NodePath("AnimatedSprite2D:flip_h")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(6.915, 6.915)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("AnimatedSprite2D:flip_h")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
 "values": [false]
 }
 
@@ -276,6 +240,8 @@ screenshake_max_offset = 70.0
 screenshake_shoot_amount = 0.17
 screenshake_hurt_amount = 0.46
 screenshake_slam_amount = 0.72
+fall_gravity_multiplier = 2.0
+rise_gravity_multiplier = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=447747020]
 position = Vector2(0, 14.883881)
@@ -312,7 +278,7 @@ libraries/ = SubResource("AnimationLibrary_hpmvu")
 
 [node name="Node2D" parent="." unique_id=2139714855 instance=ExtResource("9_hpmvu")]
 position = Vector2(37.7953, -114.961)
-scale = Vector2(6.915, 6.915)
+scale = Vector2(6.915001, 6.915001)
 
 [node name="dash" type="AudioStreamPlayer2D" parent="." unique_id=1108941584]
 stream = ExtResource("19_kgbx4")

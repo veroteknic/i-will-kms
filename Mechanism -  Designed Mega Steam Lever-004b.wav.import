@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dlsjrg4tvbj52"
+path="res://.godot/imported/Mechanism -  Designed Mega Steam Lever-004b.wav-0eb4b4b94fcab994c227ee76b069dc41.sample"
+
+[deps]
+
+source_file="res://Mechanism -  Designed Mega Steam Lever-004b.wav"
+dest_files=["res://.godot/imported/Mechanism -  Designed Mega Steam Lever-004b.wav-0eb4b4b94fcab994c227ee76b069dc41.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -4,6 +4,11 @@ const EXPLOSION_DAMAGE = 3
 const EXPLOSION_RADIUS = 150.0
 const FUSE_TIME = 2.0
 
+@export_range(0.0, 5000.0, 10.0, "suffix:px/s") var grenade_jump_force: float = 1850.0
+@export_range(0.0, 1.0, 0.01) var grenade_jump_min_falloff: float = 0.2
+@export_range(0.0, 1.0, 0.01) var grenade_jump_upward_bias: float = 0.35
+@export_range(0, 10, 1) var grenade_jump_self_damage: int = 1
+
 var exploded = false
 
 @onready var explosion_collision_shape: CollisionShape2D = get_node_or_null("HitBox/CollisionShape2D")
@@ -30,6 +35,7 @@ func explode() -> void:
 	exploded = true
 	print_debug("[GRENADE] Exploded at %s" % global_position)
 	_shake_player_cameras()
+	_apply_grenade_jump_to_players()
 	if grenade_sprite:
 		grenade_sprite.visible = false
 	for child in get_children():
@@ -68,6 +74,62 @@ func _shake_player_cameras() -> void:
 	for node in get_tree().get_nodes_in_group("player"):
 		if node and is_instance_valid(node) and node.has_method("add_screenshake_at_position"):
 			node.add_screenshake_at_position(node.screenshake_grenade_amount, global_position, node.screenshake_grenade_radius)
+
+
+func _apply_grenade_jump_to_players() -> void:
+	for node in get_tree().get_nodes_in_group("player"):
+		var player := node as CharacterBody2D
+		if not player or not is_instance_valid(player):
+			continue
+
+		var to_player: Vector2 = player.global_position - global_position
+		var distance: float = to_player.length()
+		if distance > EXPLOSION_RADIUS:
+			continue
+
+		var direction: Vector2 = Vector2.UP if distance <= 0.001 else to_player.normalized()
+		if direction.y > -grenade_jump_upward_bias:
+			direction.y = -grenade_jump_upward_bias
+		direction = direction.normalized()
+
+		var raw_falloff: float = 1.0 - (distance / EXPLOSION_RADIUS)
+		var falloff: float = clampf(raw_falloff, grenade_jump_min_falloff, 1.0)
+		var launch_force: float = _get_grenade_jump_force_for_player(player)
+		player.velocity += direction * launch_force * falloff
+
+		_apply_grenade_jump_self_damage(player)
+
+
+func _get_grenade_jump_force_for_player(player: CharacterBody2D) -> float:
+	var script_resource: Script = player.get_script()
+	if script_resource:
+		var constants: Dictionary = script_resource.get_script_constant_map()
+		if constants.has("JUMP_FORCE"):
+			return absf(float(constants["JUMP_FORCE"])) * 2.0
+	return grenade_jump_force
+
+
+func _apply_grenade_jump_self_damage(player: Node) -> void:
+	if grenade_jump_self_damage <= 0:
+		return
+
+	var health_node: Node = player.get_node_or_null("Health")
+	if not health_node:
+		return
+
+	var had_immortality: bool = false
+	var had_immortality_prop: bool = health_node.get("immortality") != null
+	if had_immortality_prop:
+		had_immortality = bool(health_node.get("immortality"))
+		if had_immortality:
+			health_node.set("immortality", false)
+
+	var current_health_value = health_node.get("health")
+	if current_health_value != null:
+		health_node.set("health", int(current_health_value) - grenade_jump_self_damage)
+
+	if had_immortality_prop and had_immortality:
+		health_node.set("immortality", true)
 	
 
 

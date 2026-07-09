@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://dbkkdf34sjg14"]
+
+[ext_resource type="Script" uid="uid://c2tvmanxryt2f" path="res://crosshair.gd" id="1_ly6fr"]
+[ext_resource type="Texture2D" uid="uid://pxr563te8mr" path="res://crosshair.png" id="2_4sp0m"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_i4dd6"]
+
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=290142882]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_ly6fr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=405840126]
+disabled = true
+shape = SubResource("CircleShape2D_i4dd6")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1334870225]
+texture_filter = 1
+texture = ExtResource("2_4sp0m")
+metadata/_aseprite_wizard_interface_config_ = {
+"pending_changes": {
+"convert_fps_field": 60.0,
+"convert_ms_field": 16.0,
+"convert_to_fps": false,
+"embed_tex": true,
+"i_mode": 0,
+"keep_anim_length": false,
+"layers": [],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"player": "",
+"scale": "1.0",
+"slice": "",
+"source": "C:/Users/johnn/Downloads/crosshair.aseprite",
+"source_uid": -1
+}
+}
