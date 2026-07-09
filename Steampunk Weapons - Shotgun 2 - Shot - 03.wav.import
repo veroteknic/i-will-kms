@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cx53axx7nn557"
+path="res://.godot/imported/Steampunk Weapons - Shotgun 2 - Shot - 03.wav-078537a6641ec319b20c23d713b02d50.sample"
+
+[deps]
+
+source_file="res://Steampunk Weapons - Shotgun 2 - Shot - 03.wav"
+dest_files=["res://.godot/imported/Steampunk Weapons - Shotgun 2 - Shot - 03.wav-078537a6641ec319b20c23d713b02d50.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

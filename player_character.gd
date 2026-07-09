@@ -88,6 +88,10 @@ var ambient_timer := 0.0
 @export_range(50.0, 5000.0, 10.0, "suffix:px") var screenshake_enemy_event_radius: float = 1200.0
 @export_range(50.0, 5000.0, 10.0, "suffix:px") var screenshake_grenade_radius: float = 1600.0
 
+@export_group("Air Control")
+@export_range(0.5, 3.0, 0.05) var fall_gravity_multiplier: float = 1.8
+@export_range(0.5, 1.0, 0.05) var rise_gravity_multiplier: float = 0.85
+
 # movement
 var movement_speed = 900.0
 const AIR_ACCEL = 5000.0
@@ -122,7 +126,7 @@ var dash_direction = Vector2.ZERO
 var run_available = true
 @onready var arm: Node2D = $Node2D
 @onready var dash: AudioStreamPlayer2D = $dash
-@onready var health_component: Health = $Health
+@onready var health_component: Node = $Health
 var jump_count = 0
 const MAX_WALL_JUMPS = 3
 var wall_jump_count = 0
@@ -195,6 +199,16 @@ func _process(delta: float) -> void:
 	_update_screenshake(delta)
 	_update_debug_text()
 
+
+func _unhandled_input(event: InputEvent) -> void:
+	if is_dead:
+		return
+	if event is InputEventKey and event.pressed and not event.echo:
+		if event.keycode == KEY_2 and arm and arm.has_method("equip_shotgun"):
+			arm.call("equip_shotgun")
+		elif event.keycode == KEY_1 and arm and arm.has_method("equip_pistol"):
+			arm.call("equip_pistol")
+
 func _physics_process(delta: float) -> void:
 	if is_dead:
 		return
@@ -255,7 +269,12 @@ func _physics_process(delta: float) -> void:
 	else:
 		# Gravity
 		if not is_on_floor():
-			velocity += get_gravity() * delta
+			var gravity := get_gravity()
+			if velocity.y > 0:
+				gravity *= fall_gravity_multiplier
+			elif velocity.y < 0:
+				gravity *= rise_gravity_multiplier
+			velocity += gravity * delta
 
 		# Jump / Wall jump
 		if Input.is_action_just_pressed("jump"):
